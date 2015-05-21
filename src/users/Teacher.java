@@ -4,12 +4,13 @@ import books.Book;
 
 public class Teacher extends User {
 	private final String name;
-	public static final int LOANS_LIMIT = 6;	// limite de livros locados
-	public static final int LOAN_TERM = 60;	// limite de dias de permanencia
 	
 	public Teacher(int id, String name) {
-		this.name = name;
-		this.id = id;
+            this.name = name;
+            this.id = id;
+                
+            LOANS_LIMIT = 6;
+            LOAN_TERM = 60;
 	}
 	
 	@Override

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+   <children>
+      <Label layoutX="54.0" layoutY="33.0" text="New Loan" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="25.0">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Label layoutX="39.0" layoutY="84.0" text="User:" />
+      <Label layoutX="39.0" layoutY="122.0" text="Book ID:" />
+      <Label layoutX="39.0" layoutY="159.0" text="Title:" />
+      <Label layoutX="39.0" layoutY="143.0" text="or">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Button layoutX="363.0" layoutY="330.0" mnemonicParsing="false" text="Confirm" />
+      <Button layoutX="470.0" layoutY="330.0" mnemonicParsing="false" text="Cancel" />
+   </children>
+</AnchorPane>

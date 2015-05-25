@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="45.0" layoutY="95.0" text="New Book" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="25.0">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Label layoutX="46.0" layoutY="107.0" text="ID:" />
+      <Label layoutX="46.0" layoutY="147.0" text="Title:" />
+      <Label layoutX="46.0" layoutY="192.0" text="Author:" />
+      <Label layoutX="46.0" layoutY="240.0" text="Publisher:" />
+      <Label layoutX="46.0" layoutY="291.0" prefHeight="16.0" prefWidth="32.0" text="Year:" />
+      <ChoiceBox layoutX="46.0" layoutY="331.0" prefWidth="150.0" />
+      <Button layoutX="474.0" layoutY="331.0" mnemonicParsing="false" text="Cancel" />
+      <Button layoutX="360.0" layoutY="331.0" mnemonicParsing="false" text="Confirm" />
+   </children>
+</AnchorPane>

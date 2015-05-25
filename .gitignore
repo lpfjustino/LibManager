@@ -1,7 +1,10 @@
 /build/
 /dist/
 /bin/
+<<<<<<< HEAD
 .classpath
 .project
 .settings/org.eclipse.jdt.core.prefs
 .settings/org.eclipse.wst.common.project.facet.core.xml
+=======
+>>>>>>> 8cca07f014df30921af0b2210120f9e31d39d954

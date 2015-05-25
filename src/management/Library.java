@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Library {
     private List<User> users;
-    private List<User> suspendedUsers;
+    private Map<User, Date> suspendedUsers;
     private Map<Book, Integer> collection;
     private List<Loan> loans;
 
@@ -54,31 +54,31 @@ public class Library {
     }
 
     public boolean isSuspended (User user) {
-        return suspendedUsers.contains(user);
+        return suspendedUsers.containsKey(user);
     }
 
-    public void timeSuspended () {
-
+    public Date timeSuspended (User user) {
+        return suspendedUsers.get(user);
     }
 
-    public void suspendUser (User user) {
+    public void suspendUser (User user, Date date) {
         if(!isSuspended(user))
-            suspendedUsers.add(user);
+            suspendedUsers.put(user, date);
     }
-
 
     public List<User> getUsers() {
         return users;
     }
+    
     public void setUsers(List<User> users) {
         this.users = users;
     }
 
-    public List<User> getSuspendedUsers() {
+    public Map<User, Date> getSuspendedUsers() {
         return suspendedUsers;
     }
 
-    public void setSuspendedUsers(List<User> suspendedUsers) {
+    public void setSuspendedUsers(Map<User, Date> suspendedUsers) {
         this.suspendedUsers = suspendedUsers;
     }
 

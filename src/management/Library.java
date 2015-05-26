@@ -1,18 +1,24 @@
 package management;
 import books.Book;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import users.User;
 import java.util.Map;
-
+import users.UserType;
 
 public class Library {
     private List<User> users;
     private Map<User, Date> suspendedUsers;
     private Map<Book, Integer> collection;
     private List<Loan> loans;
-
-    private Date date;      // dia atual da aplicacao
+    private Date date;
+    
+    public Library (Date currentDate) throws IOException {
+        date = currentDate;
+        CSVManager.populateLibrary();
+    }
 
     public void addToCollection(Book book, int quantity) {
         if(collection.containsKey(book)) {
@@ -23,16 +29,30 @@ public class Library {
         }
     }
 
-    public void registerUser(User user) {
+    public void registerUser(User user, UserType type) throws IOException {
         users.add(user);
+        CSVManager.includeUser(user, type);
     }
 
     public void listCollection() {
-
+        collection.entrySet()
+                .stream()
+                .forEach((entry) -> {
+                    System.out.println("Book: " + entry.getKey() +
+                        "\nQty: " + entry.getValue() + "\n");
+                });
     }
 
     public void listLoans() {
-
+        loans
+            .stream()
+            .forEach((loan) -> {
+                String expirationDate = new SimpleDateFormat("dd/MM/yyyy")
+                        .format(loan.getExpirationDate());
+                System.out.println("Book: " + loan.getBook().getTitle() +
+                    "\nBorrower: " + loan.getBorrower().getName() +
+                    "\nExpiration: " + expirationDate + "\n");
+            });
     }
 
     public void lend (Book book, User user){

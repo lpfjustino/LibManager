@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="54.0" layoutY="33.0" text="New Loan" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="25.0">
          <font>
@@ -22,7 +21,10 @@
             <Font size="10.0" />
          </font>
       </Label>
-      <Button layoutX="363.0" layoutY="330.0" mnemonicParsing="false" text="Confirm" />
-      <Button layoutX="470.0" layoutY="330.0" mnemonicParsing="false" text="Cancel" />
+      <Button layoutX="466.0" layoutY="274.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="105.0" text="Confirm" />
+      <Button layoutX="466.0" layoutY="334.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="105.0" text="Cancel" />
+      <TextField layoutX="108.0" layoutY="79.0" />
+      <TextField layoutX="108.0" layoutY="117.0" />
+      <TextField layoutX="108.0" layoutY="154.0" />
    </children>
 </AnchorPane>

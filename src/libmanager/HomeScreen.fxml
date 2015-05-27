@@ -14,9 +14,9 @@
             <Font size="25.0" />
          </font>
       </Label>
-      <Button layoutX="25.0" layoutY="75.0" mnemonicParsing="false" onAction="#newUserButtonAction" prefHeight="26.0" prefWidth="143.0" text="New User" />
+      <Button fx:id="newUserButton" layoutX="25.0" layoutY="75.0" mnemonicParsing="false" onAction="#newUserButtonAction" prefHeight="26.0" prefWidth="143.0" text="New User" />
       <Button layoutX="25.0" layoutY="113.0" mnemonicParsing="false" onAction="#newBookButtonAction" prefHeight="26.0" prefWidth="143.0" text="New Book" />
-      <Button layoutX="25.0" layoutY="149.0" mnemonicParsing="false" onAction="#collectionButtonAction" text="Collection Database" />
+      <Button layoutX="25.0" layoutY="149.0" mnemonicParsing="false" onAction="#collectionButtonAction" prefHeight="25.0" prefWidth="143.0" text="Collection Database" />
       <Button layoutX="25.0" layoutY="187.0" mnemonicParsing="false" onAction="#usersButtonAction" prefHeight="26.0" prefWidth="143.0" text="Users Database" />
       <Button layoutX="25.0" layoutY="225.0" mnemonicParsing="false" onAction="#loansButtonAction" prefHeight="26.0" prefWidth="143.0" text="Loans Database" />
       <Button layoutX="25.0" layoutY="292.0" mnemonicParsing="false" onAction="#newLoanButtonAction" prefHeight="57.0" prefWidth="196.0" text="New Loan">

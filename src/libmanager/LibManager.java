@@ -7,13 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class LibManager extends Application {
-    private Stage programStage;
-    
     @Override
     public void start(Stage stage) throws Exception {
-        // Keeps reference of the program stage
-        programStage = stage;
-        
         Parent root = FXMLLoader.load(getClass().getResource("HomeScreen.fxml"));
         
         Scene scene = new Scene(root);

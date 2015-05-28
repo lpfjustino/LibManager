@@ -38,7 +38,7 @@ public class Library {
         collection.entrySet()
                 .stream()
                 .forEach((entry) -> {
-                    System.out.println("Book: " + entry.getKey() +
+                    System.out.println("Book: " + entry.getKey().getTitle() +
                         "\nQty: " + entry.getValue() + "\n");
                 });
     }

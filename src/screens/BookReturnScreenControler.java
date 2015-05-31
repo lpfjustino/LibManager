@@ -12,38 +12,31 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
-public class NewBookScreenControler implements Initializable {
+public class BookReturnScreenControler implements Initializable {
 	
-	@FXML private TextField idField = new TextField();
-	@FXML private TextField titleField = new TextField();
-	@FXML private TextField authorField = new TextField();
-	@FXML private RadioButton bookText = new RadioButton();
-	@FXML private RadioButton bookGeneral = new RadioButton();
-	@FXML private ToggleGroup bookType = new ToggleGroup();
-	String title, author;
-	int id;
-	String type;
+	@FXML
+	private TextField bookTitleField = new TextField();
+	@FXML
+	private TextField userIdField = new TextField();
+	@FXML
+	private TextField bookIdField = new TextField();
+	String bookTitle;
+	int userId, bookId;
 	
 	Stage primaryStage;
 	
 	@FXML
-    private void confirmButtonAction(ActionEvent event) {        
-        id = Integer.parseInt(idField.getText());
-        title = titleField.getText();
-        author = authorField.getText();
-        type = ((RadioButton) bookType.getSelectedToggle()).getText();
+    private void confirmButtonAction(ActionEvent event) {
+        bookTitle = bookTitleField.getText();
+        userId = Integer.parseInt(userIdField.getText());
+        bookId = Integer.parseInt(bookIdField.getText());
         
-        System.out.println("Id:" + id);
-        System.out.println("author:" + author);
-        System.out.println("Title:" + title);
-        System.out.println("Type:" + type);
-     
-        //TODO: CHAMAR A FUNCAO COM OS RESULTADOS DO NEW BOOK
+        System.out.println("BookId:" + bookId);
+        System.out.println("userId:" + userId);
+        System.out.println("Title:" + bookTitle);
         
         primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
     	Platform.runLater(
@@ -55,10 +48,11 @@ public class NewBookScreenControler implements Initializable {
                     primaryStage.show();
                 } catch (IOException ex) { }
             });
-	}
+    }
+	
 	@FXML
     private void cancelButtonAction(ActionEvent event) {
-		//returns to main screen
+		// returns to main screen
 		primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
     	Platform.runLater(
             () -> {
@@ -73,6 +67,7 @@ public class NewBookScreenControler implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		// TODO Auto-generated method stub
+		
 	}
-
 }

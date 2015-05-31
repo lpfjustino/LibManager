@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="screens.BookDeliveryScreenControler">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="screens.BookReturnScreenControler">
    <children>
       <Label layoutX="36.0" layoutY="24.0" prefHeight="16.0" prefWidth="179.0" text="Book Return" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="25.0">
          <font>
@@ -15,12 +15,10 @@
          </font>
       </Label>
       <Label layoutX="36.0" layoutY="97.0" text="Book ID:" />
-      <Label layoutX="36.0" layoutY="137.0" prefHeight="16.0" prefWidth="105.0" text="Book Title:" />
-      <TextField fx:id="bookIdField" layoutX="129.0" layoutY="92.0" />
-      <TextField layoutX="129.0" layoutY="132.0" />
+      <TextField fx:id="bookIdField" layoutX="135.0" layoutY="92.0" />
       <Button layoutX="456.0" layoutY="324.0" mnemonicParsing="false" onAction="#cancelButtonAction" prefHeight="42.0" prefWidth="105.0" text="Cancel" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="25.0" />
       <Button layoutX="470.0" layoutY="279.0" mnemonicParsing="false" onAction="#confirmButtonAction" prefHeight="42.0" prefWidth="105.0" text="Confirm" AnchorPane.bottomAnchor="79.0" AnchorPane.rightAnchor="25.0" />
-      <TextField fx:id="bookIdField1" layoutX="129.0" layoutY="174.0" />
-      <Label layoutX="36.0" layoutY="179.0" text="Borrower's ID:" />
+      <TextField fx:id="userIdField" layoutX="135.0" layoutY="140.0" />
+      <Label layoutX="36.0" layoutY="145.0" text="Borrower's ID:" />
    </children>
 </AnchorPane>

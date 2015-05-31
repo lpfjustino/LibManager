@@ -15,19 +15,28 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class BookDeliveryScreenControler implements Initializable {
+public class BookReturnScreenControler implements Initializable {
 	
-	TextField bookTitleField = new TextField();
-	TextField userIdField = new TextField();
+	@FXML
+	private TextField bookTitleField = new TextField();
+	@FXML
+	private TextField userIdField = new TextField();
+	@FXML
+	private TextField bookIdField = new TextField();
 	String bookTitle;
-	String userId; 
+	int userId, bookId;
 	
 	Stage primaryStage;
 	
 	@FXML
     private void confirmButtonAction(ActionEvent event) {
-//        bookTitle = bookTitleField.getText();
-//        userId = userIdField.getText();
+        bookTitle = bookTitleField.getText();
+        userId = Integer.parseInt(userIdField.getText());
+        bookId = Integer.parseInt(bookIdField.getText());
+        
+        System.out.println("BookId:" + bookId);
+        System.out.println("userId:" + userId);
+        System.out.println("Title:" + bookTitle);
         
         primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
     	Platform.runLater(

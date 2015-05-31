@@ -17,15 +17,15 @@
             </Label>
             <Label layoutX="39.0" layoutY="84.0" text="Name:" />
             <Label layoutX="39.0" layoutY="168.0" text="Type:" />
-            <TextField fx:id="nameFIeld" layoutX="95.0" layoutY="79.0" prefHeight="26.0" prefWidth="229.0" />
+            <TextField fx:id="nameField" layoutX="95.0" layoutY="79.0" prefHeight="26.0" prefWidth="229.0" />
             <Label layoutX="39.0" layoutY="125.0" text="ID:" />
             <TextField fx:id="idField" layoutX="96.0" layoutY="120.0" />
             <RadioButton fx:id="userStudent" layoutX="96.0" layoutY="167.0" mnemonicParsing="false" text="Student">
                <toggleGroup>
-                  <ToggleGroup fx:id="group" />
+                  <ToggleGroup fx:id="userType" />
                </toggleGroup></RadioButton>
-            <RadioButton fx:id="userTeacher" layoutX="96.0" layoutY="200.0" mnemonicParsing="false" text="Teacher" toggleGroup="$group" />
-            <RadioButton fx:id="userCommunity" layoutX="96.0" layoutY="234.0" mnemonicParsing="false" text="Community" toggleGroup="$group" />
+            <RadioButton fx:id="userTeacher" layoutX="96.0" layoutY="200.0" mnemonicParsing="false" text="Teacher" toggleGroup="$userType" />
+            <RadioButton fx:id="userCommunity" layoutX="96.0" layoutY="234.0" mnemonicParsing="false" text="Community" toggleGroup="$userType" />
          </children>
       </AnchorPane>
       <Button layoutX="476.0" layoutY="344.0" mnemonicParsing="false" onAction="#cancelButtonAction" prefHeight="42.0" prefWidth="105.0" text="Cancel" />

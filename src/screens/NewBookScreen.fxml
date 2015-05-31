@@ -24,9 +24,9 @@
       <Label layoutX="46.0" layoutY="245.0" text="Type:" />
       <RadioButton fx:id="bookGeneral" layoutX="121.0" layoutY="252.0" mnemonicParsing="false" selected="true" text="General">
          <toggleGroup>
-            <ToggleGroup fx:id="group" />
+            <ToggleGroup fx:id="bookType" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="bookText" layoutX="121.0" layoutY="290.0" mnemonicParsing="false" text="Text" toggleGroup="$group" />
+      <RadioButton fx:id="bookText" layoutX="121.0" layoutY="290.0" mnemonicParsing="false" text="Text" toggleGroup="$bookType" />
    </children>
 </AnchorPane>

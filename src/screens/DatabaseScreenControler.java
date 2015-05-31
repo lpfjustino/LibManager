@@ -38,8 +38,8 @@ public class DatabaseScreenControler implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		String databaseType = null;	//parametro da lista
-		label.setText(databaseType);
+//		String databaseType = null;	//parametro da lista
+//		label.setText(databaseType);
 		
 	}
 

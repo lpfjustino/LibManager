@@ -23,8 +23,8 @@
       </Label>
       <Button layoutX="466.0" layoutY="274.0" mnemonicParsing="false" onAction="#confirmButtonAction" prefHeight="42.0" prefWidth="105.0" text="Confirm" />
       <Button layoutX="466.0" layoutY="334.0" mnemonicParsing="false" onAction="#cancelButtonAction" prefHeight="42.0" prefWidth="105.0" text="Cancel" />
-      <TextField fx:id="usernameField" layoutX="108.0" layoutY="79.0" />
-      <TextField fx:id="idField" layoutX="108.0" layoutY="117.0" />
-      <TextField fx:id="titleField" layoutX="108.0" layoutY="154.0" />
+      <TextField fx:id="usernameField" layoutX="115.0" layoutY="79.0" />
+      <TextField fx:id="bookIdField" layoutX="115.0" layoutY="117.0" />
+      <TextField fx:id="titleField" layoutX="115.0" layoutY="154.0" />
    </children>
 </AnchorPane>

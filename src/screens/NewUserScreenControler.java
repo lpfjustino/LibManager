@@ -18,22 +18,29 @@ import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
 public class NewUserScreenControler implements Initializable {
-	
 	Stage primaryStage;
-	TextField idField = new TextField();
-	TextField nameField = new TextField();
-//	ChoiceBox<BookType> userType = new ChoiceBox<BookType>();
-	RadioButton userStudent = new RadioButton("Student");
-	RadioButton userTeacher = new RadioButton("Teacher");
-	RadioButton userCommunity = new RadioButton("Community");
-	final ToggleGroup group = new ToggleGroup();
+	
+	@FXML private TextField idField = new TextField();
+	@FXML private TextField nameField = new TextField();
+	@FXML private RadioButton userStudent = new RadioButton("Student");
+	@FXML private RadioButton userTeacher = new RadioButton("Teacher");
+	@FXML private RadioButton userCommunity = new RadioButton("Community");
+	@FXML private ToggleGroup userType = new ToggleGroup();
+	
 	String name;
 	int id;
+	String type;
 
 	@FXML
     private void confirmButtonAction(ActionEvent event) {
 		id = Integer.parseInt(idField.getText());
         name = nameField.getText();
+        type = ((RadioButton) userType.getSelectedToggle()).getText();
+        
+        System.out.println("Id:" + id);
+        System.out.println("name:" + name);
+        System.out.println("Type:" + type);
+
         //TODO: CHAMAR A FUNCAO COM OS VALORES DO NEW USER
         
 		primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();

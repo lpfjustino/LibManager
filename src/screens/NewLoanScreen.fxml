@@ -13,18 +13,11 @@
             <Font size="25.0" />
          </font>
       </Label>
-      <Label layoutX="39.0" layoutY="84.0" text="Username:" />
+      <Label layoutX="39.0" layoutY="84.0" text="User ID:" />
       <Label layoutX="39.0" layoutY="122.0" text="Book ID:" />
-      <Label layoutX="39.0" layoutY="159.0" text="Title:" />
-      <Label layoutX="39.0" layoutY="143.0" text="or">
-         <font>
-            <Font size="10.0" />
-         </font>
-      </Label>
       <Button layoutX="466.0" layoutY="274.0" mnemonicParsing="false" onAction="#confirmButtonAction" prefHeight="42.0" prefWidth="105.0" text="Confirm" />
       <Button layoutX="466.0" layoutY="334.0" mnemonicParsing="false" onAction="#cancelButtonAction" prefHeight="42.0" prefWidth="105.0" text="Cancel" />
       <TextField fx:id="usernameField" layoutX="115.0" layoutY="79.0" />
       <TextField fx:id="bookIdField" layoutX="115.0" layoutY="117.0" />
-      <TextField fx:id="titleField" layoutX="115.0" layoutY="154.0" />
    </children>
 </AnchorPane>

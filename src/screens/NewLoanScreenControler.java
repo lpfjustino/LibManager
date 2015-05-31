@@ -21,22 +21,19 @@ public class NewLoanScreenControler implements Initializable{
 	@FXML
 	private TextField bookIdField;
 	@FXML
-	private TextField usernameField;
+	private TextField userIdField;
 	@FXML
-	private TextField titleField;
-	String username, title;
+	String userId;
 	int bookId;
 	
 	@FXML
     private void confirmButtonAction(ActionEvent event) {
 		
-//		bookId = Integer.valueOf(bookIdField.getText());
-        title = titleField.getText().toString();
-        username = usernameField.getText();
+		bookId = Integer.valueOf(bookIdField.getText());
+        userId = userIdField.getText();
         
         System.out.println("Id:" + bookId);
-        System.out.println("username:" + username);
-        System.out.println("Title:" + title);
+        System.out.println("username:" + userId);
 
         //TODO: CHAMAR AS FUNCAO DE NEW LOAN
 		

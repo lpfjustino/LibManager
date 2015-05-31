@@ -1,6 +1,15 @@
 package books;
 
 public enum BookType {
-	TEXT, GENERAL;
-	
+    TEXT, GENERAL;
+    
+    public static String getTypeRepresentation(BookType type) {
+        if(type == TEXT) return "Text";
+        else return "General";
+    }
+    
+    public static BookType getTypeFromText(String text) {
+        if(text.equals("Text")) return TEXT;
+        else return GENERAL;
+    }
 }

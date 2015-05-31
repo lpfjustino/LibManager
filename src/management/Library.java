@@ -1,31 +1,45 @@
 package management;
 import books.Book;
+import books.BookType;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import users.User;
 import java.util.Map;
+import java.util.Optional;
 import users.UserType;
 
 public class Library {
-    private List<User> users;
-    private Map<User, Date> suspendedUsers;
-    private Map<Book, Integer> collection;
-    private List<Loan> loans;
+    private ArrayList<User> users;
+    private HashMap<User, Date> suspendedUsers;
+    private HashMap<Book, Integer> collection;
+    private ArrayList<Loan> loans;
     private Date date;
+    private CSVManager database;
     
     public Library (Date currentDate) throws IOException {
+        users = new ArrayList<>();
+        suspendedUsers = new HashMap<>();
+        collection = new HashMap<>();
+        loans = new ArrayList<>();
+        database = new CSVManager(this);
         date = currentDate;
-        CSVManager.populateLibrary();
+
+        database.populateLibrary();
     }
 
-    public void addToCollection(Book book, int quantity) {
+    public void addToCollection(Book book, int quantity) throws IOException {
         if(collection.containsKey(book)) {
+            System.out.println("SUBST");
             int oldQuantity = collection.get(book);
-            collection.replace(book, oldQuantity+1);
+            collection.replace(book, oldQuantity + quantity);
+            database.updateCollection(book, oldQuantity + quantity);
         } else {
             collection.put(book, quantity);
+            database.includeInCollection(book, quantity);
         }
     }
 
@@ -34,12 +48,26 @@ public class Library {
         CSVManager.includeUser(user, type);
     }
 
+    public void listUsers() {
+        users
+            .stream()
+            .forEach(
+                    (entry) -> {
+                        System.out.println(String.valueOf(entry.id)
+                                + " " + entry.name);
+                    }
+            );
+    }
+    
     public void listCollection() {
         collection.entrySet()
                 .stream()
                 .forEach((entry) -> {
-                    System.out.println("Book: " + entry.getKey().getTitle() +
-                        "\nQty: " + entry.getValue() + "\n");
+                    System.out.println("Id: " + entry.getKey().getId() +
+                        "\nTitle: " + entry.getKey().getTitle() +
+                        "\nAuthor: " + entry.getKey().getAuthor() +
+                        "\nType: " + BookType.getTypeRepresentation(entry.getKey().getType()) +
+                        "\nQty: " + entry.getValue());
                 });
     }
 
@@ -81,16 +109,28 @@ public class Library {
         return suspendedUsers.get(user);
     }
 
-    public void suspendUser (User user, Date date) {
+    public void suspendUser (User user, Date date) throws IOException {
         if(!isSuspended(user))
             suspendedUsers.put(user, date);
+        
+        database.includeSuspension(user, date);
     }
 
+    public User getUser (int id) {
+        Optional<User> result = users
+                .stream()
+                .filter( user -> user.id == id )
+                .findAny();
+        
+        if(result.isPresent()) return result.get();
+        else return null;
+    }
+    
     public List<User> getUsers() {
         return users;
     }
     
-    public void setUsers(List<User> users) {
+    public void setUsers(ArrayList<User> users) {
         this.users = users;
     }
 
@@ -98,7 +138,7 @@ public class Library {
         return suspendedUsers;
     }
 
-    public void setSuspendedUsers(Map<User, Date> suspendedUsers) {
+    public void setSuspendedUsers(HashMap<User, Date> suspendedUsers) {
         this.suspendedUsers = suspendedUsers;
     }
 
@@ -106,7 +146,7 @@ public class Library {
         return collection;
     }
 
-    public void setCollection(Map<Book, Integer> collection) {
+    public void setCollection(HashMap<Book, Integer> collection) {
         this.collection = collection;
     }
 
@@ -114,7 +154,7 @@ public class Library {
         return loans;
     }
 
-    public void setLoans(List<Loan> loans) {
+    public void setLoans(ArrayList<Loan> loans) {
         this.loans = loans;
     }
 

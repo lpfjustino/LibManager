@@ -16,7 +16,9 @@ import users.Teacher;
 import users.User;
 import users.UserType;
 import books.BookType;
+import java.util.Calendar;
 import java.util.Map;
+import java.util.TimeZone;
 
 public class CSVManager {
     private static Library library;
@@ -32,7 +34,7 @@ public class CSVManager {
     }
     
     // Preenche todos os campos da biblioteca
-    public static void populateLibrary() throws IOException {
+    public void populateLibrary() throws IOException {
         populateUsers();
         populateSuspendedUsers();
         populateCollection();
@@ -40,7 +42,7 @@ public class CSVManager {
     }
 
     // Preenche a lista de usuários da biblioteca com todos os usuários
-    private static void populateUsers() throws IOException {
+    private void populateUsers() throws IOException {
         fetchStudents();
         fetchTeachers();
         fetchCommunities();
@@ -48,12 +50,12 @@ public class CSVManager {
     
     // Preenche a lista de usuários da biblioteca com os alunos já
     // existentes no arquivo
-    private static void fetchStudents() throws IOException {
+    private void fetchStudents() throws IOException {
         File studentsCSV = new File("students.csv");
         assertFileExistence(studentsCSV);
         
         try (CSVReader csvReader = new CSVReader(new FileReader(studentsCSV))) {
-            String[] row = null;
+            String[] row;
             while((row = csvReader.readNext()) != null) {
                 Student student = new Student(Integer.valueOf(row[0]), row[1]);
                 library.getUsers().add(student);
@@ -65,7 +67,7 @@ public class CSVManager {
     
     // Preenche a lista de usuários da biblioteca com os professores já
     // existentes no arquivo
-    private static void fetchTeachers() throws IOException {
+    private void fetchTeachers() throws IOException {
         File teachersCSV = new File("teachers.csv");
         assertFileExistence(teachersCSV);
         
@@ -82,7 +84,7 @@ public class CSVManager {
     
     // Preenche a lista de usuários da biblioteca com as comunidades já
     // existentes no arquivo
-    private static void fetchCommunities() throws IOException {
+    private void fetchCommunities() throws IOException {
         File communitiesCSV = new File("communities.csv");
         assertFileExistence(communitiesCSV);
         
@@ -99,7 +101,7 @@ public class CSVManager {
     }
 
     // Recupera os alunos suspensos presentes no arquivo
-    private static void populateSuspendedUsers() throws IOException {
+    private void populateSuspendedUsers() throws IOException {
         File suspendedCSV = new File("suspended.csv");
         assertFileExistence(suspendedCSV);
         
@@ -119,7 +121,7 @@ public class CSVManager {
     }
     
     // Recupera os itens da coleção presentes no arquivo
-    private static void populateCollection() throws IOException {
+    private void populateCollection() throws IOException {
         File collectionCSV = new File("collection.csv");
         assertFileExistence(collectionCSV);
         
@@ -135,7 +137,7 @@ public class CSVManager {
     }
 
     // Recupera os empréstimos presentes no arquivo
-    private static void populateLoans() throws IOException {
+    private void populateLoans() throws IOException {
         File loansCSV = new File("loans.csv");
         assertFileExistence(loansCSV);
         
@@ -149,6 +151,7 @@ public class CSVManager {
         
         reader.close();
     }
+    
     
     ////////////////////////////////////////////////////////
     // Funções para gerenciar diretamente os arquivos CSV //
@@ -194,7 +197,7 @@ public class CSVManager {
     }
     
     // Adiciona no arquivo de registros o livro passado por parâmetro
-    public static void includeInCollection(Book book, int qty) throws IOException {
+    public void includeInCollection(Book book, int qty) throws IOException {
         CSVWriter writer = new CSVWriter(new FileWriter("collection.csv", true));
         String[] content = bookRowFormat(book, qty);
         writer.writeNext(content);
@@ -202,7 +205,7 @@ public class CSVManager {
     }
     
     // Substitui o registro do livro passado por parâmetro por um com a nova quantidade
-    public static void updateCollection(Book book, int newQuantity) throws IOException {
+    public void updateCollection(Book book, int newQuantity) throws IOException {
         File file = new File("collection.csv");
         CSVReader reader = new CSVReader(new FileReader(file));
         String[] nextLine;
@@ -211,7 +214,7 @@ public class CSVManager {
         while ((nextLine = reader.readNext()) != null) {
             if (nextLine[0].matches(String.valueOf(book.getId()))) {
                 // Apaga o antigo arquivo e o reescreve todos os itens
-                CSVWriter writer = new CSVWriter(new FileWriter(file, true));
+                CSVWriter writer = new CSVWriter(new FileWriter(file));
 
                 library.getCollection().entrySet()
                         .stream()
@@ -234,6 +237,14 @@ public class CSVManager {
     public static void includeLoan(Loan loan) throws IOException {
         CSVWriter writer = new CSVWriter(new FileWriter("loans.csv", true));
         String[] content = loanRowFormat(loan);
+        writer.writeNext(content);
+        writer.close();
+    }
+    
+    // Insere o usuário na lista de usuários suspensos
+    public void includeSuspension(User user, Date date) throws IOException {
+        CSVWriter writer = new CSVWriter(new FileWriter("suspended.csv", true));
+        String[] content = suspensionRowFormat(user, date);
         writer.writeNext(content);
         writer.close();
     }
@@ -261,16 +272,15 @@ public class CSVManager {
     // Retorna a string que corresponde a um registro no arquivo
     private static String[] bookRowFormat(Book book, int qty) {
         return (book.getId() + "," + book.getTitle() + ","
-                + book.getAuthor()+ ","
-                + BookType.getTypeRepresentation(book.getType()) +
+                + book.getAuthor() + ","
+                + BookType.getTypeRepresentation(book.getType()) + "," +
                 String.valueOf(qty)).split(",");
     }
     
     // Retorna a string que corresponde a um registro no arquivo
     private static String[] userRowFormat(User user) {
         return (user.id + "," +
-                user.name + "," + user.LOANS_LIMIT + "," +
-                user.LOAN_TERM).split(",");
+                user.name).split(",");
     }
     
     // Retorna a string que corresponde a um registro no arquivo
@@ -281,6 +291,21 @@ public class CSVManager {
                 BookType.getTypeRepresentation(loan.getBook().getType())+ "," +
                 loan.getBorrower().id + "," +
                 loan.getBorrower().getName()).split(",");
+    }
+    
+    // Retorna a string que corresponde a uma suspensão no arquivo
+    private static String[] suspensionRowFormat(User user, Date date) {
+        Calendar localCalendar = Calendar.getInstance();
+        localCalendar.setTime(date);
+        int day = localCalendar.get(Calendar.DATE);
+        int month = localCalendar.get(Calendar.MONTH) + 1;
+        int year = localCalendar.get(Calendar.YEAR);
+        
+        return (user.id + "," +
+                user.name + "," +
+                day + "," +
+                month + "," +
+                year).split(",");
     }
     
     // Verifica qual é o tipo do usuário e retorna um objeto do tipo apropriado

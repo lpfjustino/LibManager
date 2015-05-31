@@ -38,4 +38,24 @@ public class Book {
     public void setType(BookType type) {
         this.type = type;
     }
+    
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Book other = (Book) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
+    }
 }

@@ -4,12 +4,12 @@ public enum BookType {
     TEXT, GENERAL;
     
     public static String getTypeRepresentation(BookType type) {
-        if(type == TEXT) return "text";
-        else return "general";
+        if(type == TEXT) return "Text";
+        else return "General";
     }
     
     public static BookType getTypeFromText(String text) {
-        if(text.equals("text")) return TEXT;
+        if(text.equals("Text")) return TEXT;
         else return GENERAL;
     }
 }

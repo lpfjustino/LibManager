@@ -19,25 +19,30 @@ import users.User;
 import users.UserType;
 
 public class LibManager extends Application {
+    Library library;
+    
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("HomeScreen.fxml"));
+        String dateString = "January 2, 2010";
+        DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+        Date date = format.parse(dateString);
+        library = new Library(date);
         
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("HomeScreen.fxml"));
+        Parent root = loader.load();
         Scene scene = new Scene(root);
-        
         stage.setScene(scene);
         stage.show();
+        
+        HomeScreenController hsc = loader.getController();
+        hsc.initializeLibrary(library);
+        
+        
     }
 
     public static void main(String[] args) {
-//        launch(args);
+        launch(args);
         
-        String string = "January 2, 2010";
-        DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
-        try {
-            Date date = format.parse(string);
-            Library library = new Library(date);
-            
             /////////////////// NEW USERS ///////////////////
 //            Student istudanty = new Student(1, "Esteiquerino");
 //            library.registerUser(istudanty, UserType.STUDENT);
@@ -75,8 +80,6 @@ public class LibManager extends Application {
 //            Date suspension = format.parse(suspensionString);
 //            User suspendable = library.getUser(2);
 //            library.suspendUser(suspendable, suspension);
-            
-        } catch (IOException | ParseException ex) {}
     }
     
 }

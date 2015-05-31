@@ -15,7 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-public class DatabaseScreenControler implements Initializable {
+public class DatabaseScreenController implements Initializable {
 	
 	Stage primaryStage;
 	

@@ -12,9 +12,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
+import management.Library;
+import screens.NewUserScreenController;
 
 public class HomeScreenController implements Initializable {
     Stage primaryStage;
+    Library library;
     
     @FXML
     private void newUserButtonAction(ActionEvent event) {
@@ -22,10 +25,14 @@ public class HomeScreenController implements Initializable {
     	Platform.runLater(
             () -> {
                 try {
-                    Parent newUser = FXMLLoader.load(getClass().getResource("/screens/NewUserScreen.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/NewUserScreen.fxml"));
+                    Parent newUser = loader.load();
                     Scene scene = new Scene(newUser);
                     primaryStage.setScene(scene);
                     primaryStage.show();
+                    
+                    NewUserScreenController nusc = loader.getController();
+                    nusc.initializeLibrary(library);
                 } catch (IOException ex) { }
             });
     }
@@ -119,4 +126,7 @@ public class HomeScreenController implements Initializable {
         // TODO
     }    
     
+    public void initializeLibrary(Library library) {
+        this.library = library;
+    }
 }

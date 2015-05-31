@@ -16,9 +16,15 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
+import management.Library;
+import users.Community;
+import users.Student;
+import users.Teacher;
+import users.UserType;
 
-public class NewUserScreenControler implements Initializable {
-	Stage primaryStage;
+public class NewUserScreenController implements Initializable {
+	private Stage primaryStage;
+        private Library library;
 	
 	@FXML private TextField idField = new TextField();
 	@FXML private TextField nameField = new TextField();
@@ -27,23 +33,30 @@ public class NewUserScreenControler implements Initializable {
 	@FXML private RadioButton userCommunity = new RadioButton("Community");
 	@FXML private ToggleGroup userType = new ToggleGroup();
 	
-	String name;
-	int id;
-	String type;
-
-	@FXML
-    private void confirmButtonAction(ActionEvent event) {
-		id = Integer.parseInt(idField.getText());
-        name = nameField.getText();
-        type = ((RadioButton) userType.getSelectedToggle()).getText();
+    @FXML
+    private void confirmButtonAction(ActionEvent event) throws IOException {
+        int id = Integer.parseInt(idField.getText());
+        String name = nameField.getText();
+        String type = ((RadioButton) userType.getSelectedToggle()).getText();
+        UserType userType = UserType.getTypeFromText(type);
         
-        System.out.println("Id:" + id);
-        System.out.println("name:" + name);
-        System.out.println("Type:" + type);
-
-        //TODO: CHAMAR A FUNCAO COM OS VALORES DO NEW USER
+        switch(userType) {
+            case STUDENT:
+                Student newStudent = new Student(id, name);
+                library.registerUser(newStudent, userType);
+                break;
+            case TEACHER:
+                Teacher newTeacher = new Teacher(id, name);
+                library.registerUser(newTeacher, userType);
+                break;
+                
+            case COMMUNITY:
+                Community newCommunity = new Community(id, name);
+                library.registerUser(newCommunity, userType);
+                break;
+        }
         
-		primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
     	Platform.runLater(
             () -> {
                 try {
@@ -54,9 +67,10 @@ public class NewUserScreenControler implements Initializable {
                 } catch (IOException ex) { }
             });
     }
-	@FXML
+    
+    @FXML
     private void cancelButtonAction(ActionEvent event) {
-		// returns to main screen
+		// Retorna para a tela principal
 		primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
 		Platform.runLater(
 				() -> {
@@ -72,5 +86,8 @@ public class NewUserScreenControler implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 	}
-
+        
+        public void initializeLibrary(Library library) {
+            this.library = library;
+        }
 }

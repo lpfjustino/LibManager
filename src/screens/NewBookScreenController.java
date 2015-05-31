@@ -1,5 +1,7 @@
 package screens;
 
+import books.Book;
+import books.BookType;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,34 +18,34 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
+import management.Library;
 
-public class NewBookScreenControler implements Initializable {
+public class NewBookScreenController implements Initializable {
+    Library library;
+    
+    @FXML private TextField idField = new TextField();
+    @FXML private TextField titleField = new TextField();
+    @FXML private TextField authorField = new TextField();
+    @FXML private RadioButton bookText = new RadioButton();
+    @FXML private RadioButton bookGeneral = new RadioButton();
+    @FXML private ToggleGroup bookType = new ToggleGroup();
+
+    Stage primaryStage;
 	
-	@FXML private TextField idField = new TextField();
-	@FXML private TextField titleField = new TextField();
-	@FXML private TextField authorField = new TextField();
-	@FXML private RadioButton bookText = new RadioButton();
-	@FXML private RadioButton bookGeneral = new RadioButton();
-	@FXML private ToggleGroup bookType = new ToggleGroup();
-	String title, author;
-	int id;
-	String type;
-	
-	Stage primaryStage;
-	
-	@FXML
-    private void confirmButtonAction(ActionEvent event) {        
-        id = Integer.parseInt(idField.getText());
-        title = titleField.getText();
-        author = authorField.getText();
-        type = ((RadioButton) bookType.getSelectedToggle()).getText();
+    @FXML
+    private void confirmButtonAction(ActionEvent event) throws IOException {
+        int qty=0;                                            // VEM DO CAMPO QUE VC VAI CRIAR DE TEXTFIELD!!!
+        int id = Integer.parseInt(idField.getText());
+        String title = titleField.getText();
+        String author = authorField.getText();
+        String type = ((RadioButton) bookType.getSelectedToggle()).getText();
+        BookType bookType = BookType.getTypeFromText(type);
         
-        System.out.println("Id:" + id);
-        System.out.println("author:" + author);
-        System.out.println("Title:" + title);
-        System.out.println("Type:" + type);
-     
-        //TODO: CHAMAR A FUNCAO COM OS RESULTADOS DO NEW BOOK
+        Book newBook = new Book(id);
+        newBook.setTitle(title);
+        newBook.setAuthor(author);
+        newBook.setType(BookType.GENERAL);
+        library.addToCollection(newBook, qty);
         
         primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
     	Platform.runLater(
@@ -56,7 +58,8 @@ public class NewBookScreenControler implements Initializable {
                 } catch (IOException ex) { }
             });
 	}
-	@FXML
+    
+    @FXML
     private void cancelButtonAction(ActionEvent event) {
 		//returns to main screen
 		primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
@@ -71,8 +74,12 @@ public class NewBookScreenControler implements Initializable {
             });
     }
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-	}
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+    }
+    
+    public void initializeLibrary(Library library) {
+        this.library = library;
+    }
 
 }

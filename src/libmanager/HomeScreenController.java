@@ -2,6 +2,7 @@ package libmanager;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -25,8 +26,7 @@ public class HomeScreenController implements Initializable {
     Stage primaryStage;
     public static Library library;
 
-    @FXML
-    private Label systemDate;
+    @FXML private Label systemDate;
     
     @FXML
     private void newUserButtonAction(ActionEvent event) {
@@ -121,14 +121,20 @@ public class HomeScreenController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-//    	systemDate.setText(library.getDate().toString());
+        Platform.runLater(
+            () -> {
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                String dateString = formatter.format(library.getDate());
+                String labelText = systemDate.getText() + dateString;
+                systemDate.setText(labelText);
+            });
     }    
     
     public void initializeLibrary(Date date) {
     	try {
-			library = new Library (date);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+            library = new Library (date);
+            } catch (IOException e) {
+                    e.printStackTrace();
+            }
     }
 }

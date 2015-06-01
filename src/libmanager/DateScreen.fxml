@@ -6,14 +6,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="232.0" prefWidth="284.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="libmanager.DateScreenController">
+<AnchorPane prefHeight="309.0" prefWidth="368.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="libmanager.DateScreenController">
    <children>
-      <DatePicker fx:id="datePicker" layoutX="46.0" layoutY="54.0" onAction="#datePickerAction" />
-      <Label layoutX="76.0" layoutY="24.0" text="Select System Date:">
+      <DatePicker fx:id="datePicker" layoutX="97.0" layoutY="51.0" onAction="#datePickerAction" />
+      <Label layoutX="127.0" layoutY="21.0" text="Select System Date:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Button layoutX="208.0" layoutY="192.0" mnemonicParsing="false" onAction="#confirmButtonAction" text="Confirm" />
    </children>
 </AnchorPane>

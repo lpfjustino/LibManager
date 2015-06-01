@@ -1,5 +1,6 @@
 package screens;
 
+import books.Book;
 import books.NoSuchBookException;
 import java.io.IOException;
 import java.net.URL;
@@ -16,8 +17,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import libmanager.HomeScreenController;
-import management.Library;
 import users.NoSuchUserException;
+import users.User;
 
 public class BookReturnScreenController implements Initializable {
     Stage primaryStage;
@@ -27,15 +28,23 @@ public class BookReturnScreenController implements Initializable {
     @FXML private TextField bookIdField = new TextField();
 	
     @FXML
-    private void confirmButtonAction(ActionEvent event) {
-        String bookTitle = bookTitleField.getText();
-        int userId = Integer.parseInt(userIdField.getText());
-        int bookId = Integer.parseInt(bookIdField.getText());
-        
+    private void confirmButtonAction(ActionEvent event) throws IOException {
         try {
-            HomeScreenController.library.getBook(bookId);
-            HomeScreenController.library.getUser(userId);
-            HomeScreenController.library.returnBook(null, null);
+            String bookTitle = bookTitleField.getText();
+            int userId = Integer.parseInt(userIdField.getText());
+            int bookId = Integer.parseInt(bookIdField.getText());
+            
+            Book book = HomeScreenController.library.getBook(bookId);
+            User user = HomeScreenController.library.getUser(userId);
+            boolean success = HomeScreenController.library.returnBook(book, user);
+            
+            if(success) HomeScreenController.library.showDialog("Success",
+                                    "Return registered.",
+                                    "The return has been made successfully.");
+            else HomeScreenController.library.showDialog("Failed",
+                                    "Return not registered.",
+                                    "Couldn't complete the return.");
+            
         } catch(NumberFormatException ex) {
             HomeScreenController.library.showDialog("Error", "Invalid input.",
                                         "Please fill in the text fields.");

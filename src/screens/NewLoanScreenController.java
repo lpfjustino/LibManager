@@ -4,9 +4,6 @@ import books.NoSuchBookException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,20 +13,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import libmanager.HomeScreenController;
-import management.CSVManager;
-import management.Library;
 import management.Loan;
 import users.NoSuchUserException;
 
 public class NewLoanScreenController implements Initializable{
-	Library library;
-	Stage primaryStage;
-	@FXML private TextField userIdField;
-	@FXML private TextField bookIdField;
+    Stage primaryStage;
+    @FXML private TextField userIdField;
+    @FXML private TextField bookIdField;
 	
     @FXML
     private void confirmButtonAction(ActionEvent event) throws IOException {
@@ -44,7 +36,15 @@ public class NewLoanScreenController implements Initializable{
                     HomeScreenController.library.getDate(),
                     loan.getBorrower().LOAN_TERM));
             
-            CSVManager.includeLoan(loan);
+            boolean success = HomeScreenController.library.lend(loan);
+            
+            if(success) HomeScreenController.library.showDialog("Success",
+                                        "Loan registered.",
+                                        "The loan has been made successfully.");
+            else HomeScreenController.library.showDialog("Failed",
+                                        "Loan not registered.",
+                                        "Couldn't complete the loan.");
+            
         } catch(NumberFormatException ex) {
             HomeScreenController.library.showDialog("Error", "Invalid input.",
                                         "Please fill in the text fields.");
@@ -56,8 +56,6 @@ public class NewLoanScreenController implements Initializable{
                                         "User not found");
         }
         
-        HomeScreenController.library.showDialog("Success", "Loan registered.",
-                                        "The loan has been made successfully.");
         
         primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         Platform.runLater(

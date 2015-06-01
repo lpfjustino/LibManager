@@ -231,7 +231,6 @@ public class CSVManager {
                 writer.close();
             }
         }
-        
     }
     
     // Adiciona no arquivo de registros o empréstimo passado por parâmetro
@@ -247,6 +246,24 @@ public class CSVManager {
         CSVWriter writer = new CSVWriter(new FileWriter("suspended.csv", true));
         String[] content = suspensionRowFormat(user, date);
         writer.writeNext(content);
+        writer.close();
+    }
+    
+    // Remove a linha do empréstimo do arquivo de registros
+    public static void returnBook() throws IOException {
+        File file = new File("loans.csv");
+
+        // Apaga o antigo arquivo e o reescreve todos os itens
+        CSVWriter writer = new CSVWriter(new FileWriter(file));
+
+        library.getLoans()
+                .stream()
+                .forEach(
+                    (entry) -> {
+                        String[] content = loanRowFormat(entry);
+                        writer.writeNext(content);
+                    }
+                );
         writer.close();
     }
     

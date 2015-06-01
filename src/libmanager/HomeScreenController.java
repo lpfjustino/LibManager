@@ -2,7 +2,7 @@ package libmanager;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
@@ -14,10 +14,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import management.Library;
 import screens.BookReturnScreenController;
-import screens.DatabaseScreenController;
 import screens.NewBookScreenController;
 import screens.NewLoanScreenController;
 import screens.NewUserScreenController;
@@ -25,17 +24,9 @@ import screens.NewUserScreenController;
 public class HomeScreenController implements Initializable {
     Stage primaryStage;
     public static Library library;
-    
+
     @FXML
-    private DatePicker datePicker;
-    
-    @FXML
-    private void datePickerAction(ActionEvent event) {
-    	String pattern = "dd-MM-yyyy";
-    	datePicker.setPromptText(pattern.toLowerCase());
-    	LocalDate date = datePicker.getValue();
-        System.out.println("Selected date: " + date);
-    }
+    private Label systemDate;
     
     @FXML
     private void newUserButtonAction(ActionEvent event) {
@@ -105,8 +96,6 @@ public class HomeScreenController implements Initializable {
                     primaryStage.setScene(scene);
                     primaryStage.show();
                     
-                    DatabaseScreenController dsc = loader.getController();
-//                    dsc.initializeLibrary(library);
                 } catch (IOException ex) { }
             });
     }
@@ -132,9 +121,14 @@ public class HomeScreenController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+//    	systemDate.setText(library.getDate().toString());
     }    
     
-    public void initializeLibrary(Library library) {
-        this.library = library;
+    public void initializeLibrary(Date date) {
+    	try {
+			library = new Library (date);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 }

@@ -25,6 +25,6 @@
       <Button layoutX="25.0" layoutY="150.0" mnemonicParsing="false" onAction="#databaseButtonAction" prefHeight="25.0" prefWidth="143.0" text="Database" />
       <ListView layoutX="332.0" layoutY="75.0" prefHeight="200.0" prefWidth="200.0" />
       <Label layoutX="337.0" layoutY="40.0" text="Late Returns:" />
-      <DatePicker fx:id="datePicker" layoutX="343.0" layoutY="336.0" onAction="#datePickerAction" />
+      <Label fx:id="systemDate" layoutX="446.0" layoutY="360.0" text="System Date" />
    </children>
 </AnchorPane>

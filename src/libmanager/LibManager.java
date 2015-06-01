@@ -19,23 +19,19 @@ import users.User;
 import users.UserType;
 
 public class LibManager extends Application {
-    Library library;
-    
+	
     @Override
     public void start(Stage stage) throws Exception {
-        String dateString = "January 2, 2010";
-        DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
-        Date date = format.parse(dateString);
-        library = new Library(date);
+//        String dateString = "January 2, 2010";
+//        DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+//        Date date = format.parse(dateString);
         
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("HomeScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("DateScreen.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
         
-        HomeScreenController hsc = loader.getController();
-        hsc.initializeLibrary(library);
     }
 
     public static void main(String[] args) {

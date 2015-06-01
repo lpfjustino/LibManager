@@ -5,6 +5,8 @@ import books.BookType;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -18,6 +20,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
+import libmanager.HomeScreenController;
 import management.Library;
 
 public class NewBookScreenController implements Initializable {
@@ -34,19 +37,26 @@ public class NewBookScreenController implements Initializable {
     Stage primaryStage;
 	
     @FXML
-    private void confirmButtonAction(ActionEvent event) throws IOException {
+    private void confirmButtonAction(ActionEvent event) {
         int quantity = Integer.parseInt(quantityField.getText());
         int id = Integer.parseInt(idField.getText());
         String title = titleField.getText();
         String author = authorField.getText();
         String type = ((RadioButton) bookType.getSelectedToggle()).getText();
-        BookType bookType = BookType.getTypeFromText(type);
+        BookType newBookType = BookType.getTypeFromText(type);
         
+        // Cria uma instância do livro
         Book newBook = new Book(id);
         newBook.setTitle(title);
         newBook.setAuthor(author);
-        newBook.setType(BookType.GENERAL);
-        library.addToCollection(newBook, quantity);
+        newBook.setType(newBookType);
+        
+        // Tenta adicioná-lo ao arquivo
+        try {
+            HomeScreenController.library.addToCollection(newBook, quantity);
+        } catch (IOException ex) {
+            HomeScreenController.library.showDialog("File error", "File output failed", "Error occurred on insertion");
+        }
         
         primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
     	Platform.runLater(
@@ -62,8 +72,8 @@ public class NewBookScreenController implements Initializable {
     
     @FXML
     private void cancelButtonAction(ActionEvent event) {
-		//returns to main screen
-		primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        // Retorna para a tela principal
+        primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
     	Platform.runLater(
             () -> {
                 try {
@@ -78,9 +88,4 @@ public class NewBookScreenController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
-    
-    public void initializeLibrary(Library library) {
-        this.library = library;
-    }
-
 }

@@ -1,5 +1,6 @@
 package screens;
 
+import books.NoSuchBookException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,10 +15,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import libmanager.HomeScreenController;
 import management.Library;
+import users.NoSuchUserException;
 
 public class BookReturnScreenController implements Initializable {
-    Library library;
     Stage primaryStage;
     
     @FXML private TextField bookTitleField = new TextField();
@@ -30,9 +32,20 @@ public class BookReturnScreenController implements Initializable {
         int userId = Integer.parseInt(userIdField.getText());
         int bookId = Integer.parseInt(bookIdField.getText());
         
-        System.out.println("BookId:" + bookId);
-        System.out.println("userId:" + userId);
-        System.out.println("Title:" + bookTitle);
+        try {
+            HomeScreenController.library.getBook(bookId);
+            HomeScreenController.library.getUser(userId);
+            HomeScreenController.library.returnBook(null, null);
+        } catch(NumberFormatException ex) {
+            HomeScreenController.library.showDialog("Error", "Invalid input.",
+                                        "Please fill in the text fields.");
+        } catch (NoSuchBookException nsb) {
+            HomeScreenController.library.showDialog("Error", "Invalid input.", 
+                                        "Book not found");
+        } catch (NoSuchUserException nsu) {
+            HomeScreenController.library.showDialog("Error", "Invalid input.",
+                                        "User not found");
+        }
         
         primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
     	Platform.runLater(
@@ -48,8 +61,8 @@ public class BookReturnScreenController implements Initializable {
 	
 	@FXML
     private void cancelButtonAction(ActionEvent event) {
-		// returns to main screen
-		primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        // Retorna para a tela principal
+        primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
     	Platform.runLater(
             () -> {
                 try {
@@ -63,9 +76,5 @@ public class BookReturnScreenController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-    }
-        
-    public void initializeLibrary(Library library) {
-        this.library = library;
     }
 }

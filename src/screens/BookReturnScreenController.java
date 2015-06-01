@@ -14,25 +14,21 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import management.Library;
 
 public class BookReturnScreenController implements Initializable {
+    Library library;
+    Stage primaryStage;
+    
+    @FXML private TextField bookTitleField = new TextField();
+    @FXML private TextField userIdField = new TextField();
+    @FXML private TextField bookIdField = new TextField();
 	
-	@FXML
-	private TextField bookTitleField = new TextField();
-	@FXML
-	private TextField userIdField = new TextField();
-	@FXML
-	private TextField bookIdField = new TextField();
-	String bookTitle;
-	int userId, bookId;
-	
-	Stage primaryStage;
-	
-	@FXML
+    @FXML
     private void confirmButtonAction(ActionEvent event) {
-        bookTitle = bookTitleField.getText();
-        userId = Integer.parseInt(userIdField.getText());
-        bookId = Integer.parseInt(bookIdField.getText());
+        String bookTitle = bookTitleField.getText();
+        int userId = Integer.parseInt(userIdField.getText());
+        int bookId = Integer.parseInt(bookIdField.getText());
         
         System.out.println("BookId:" + bookId);
         System.out.println("userId:" + userId);
@@ -65,9 +61,11 @@ public class BookReturnScreenController implements Initializable {
             });
     }
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+    }
+        
+    public void initializeLibrary(Library library) {
+        this.library = library;
+    }
 }

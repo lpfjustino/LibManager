@@ -13,6 +13,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import management.Library;
+import screens.BookReturnScreenController;
+import screens.DatabaseScreenController;
+import screens.NewBookScreenController;
+import screens.NewLoanScreenController;
 import screens.NewUserScreenController;
 
 public class HomeScreenController implements Initializable {
@@ -43,87 +47,77 @@ public class HomeScreenController implements Initializable {
     	Platform.runLater(
             () -> {
                 try {
-                    Parent newBook = FXMLLoader.load(getClass().getResource("/screens/NewBookScreen.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/NewBookScreen.fxml"));
+                    Parent newBook = loader.load();
                     Scene scene = new Scene(newBook);
                     primaryStage.setScene(scene);
                     primaryStage.show();
+                    
+                    NewBookScreenController nbsc = loader.getController();
+                    nbsc.initializeLibrary(library);
                 } catch (IOException ex) { }
             });
     }
     @FXML
     private void newLoanButtonAction(ActionEvent event) {
+        primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
     	System.out.println("NEW LOAN");
-    	primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
     	Platform.runLater(
             () -> {
                 try {
-                    Parent newLoan = FXMLLoader.load(getClass().getResource("/screens/NewLoanScreen.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/NewLoanScreen.fxml"));
+                    Parent newLoan = loader.load();
                     Scene scene = new Scene(newLoan);
                     primaryStage.setScene(scene);
                     primaryStage.show();
-                } catch (IOException ex) { }
+                    
+                    NewLoanScreenController nlsc = loader.getController();
+                    nlsc.initializeLibrary(library);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             });
     }
     @FXML
-    private void usersButtonAction(ActionEvent event) {
-    	System.out.println("USERS");
-    	primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+    private void databaseButtonAction(ActionEvent event) {
+        primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+    	System.out.println("DATABASE");
     	Platform.runLater(
             () -> {
                 try {
-                    Parent users = FXMLLoader.load(getClass().getResource("/screens/DatabaseScreen.fxml"));
-                    Scene scene = new Scene(users);
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/DatabaseScreen.fxml"));
+                    Parent database = loader.load();
+                    Scene scene = new Scene(database);
                     primaryStage.setScene(scene);
                     primaryStage.show();
+                    
+                    DatabaseScreenController dsc = loader.getController();
+                    dsc.initializeLibrary(library);
                 } catch (IOException ex) { }
             });
     }
-    @FXML
-    private void loansButtonAction(ActionEvent event) {
-    	System.out.println("LOANS");
-    	primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-    	Platform.runLater(
-            () -> {
-                try {
-                    Parent loans = FXMLLoader.load(getClass().getResource("/screens/DatabaseScreen.fxml"));
-                    Scene scene = new Scene(loans);
-                    primaryStage.setScene(scene);
-                    primaryStage.show();
-                } catch (IOException ex) { }
-            });
-    }
+
     @FXML
     private void bookReturnButtonAction(ActionEvent event) {
-    	System.out.println("BOOK RETURN");
     	primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+    	System.out.println("BOOK RETURN");
     	Platform.runLater(
             () -> {
                 try {
-                    Parent bookReturn = FXMLLoader.load(getClass().getResource("/screens/BookReturnScreen.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/BookReturnScreen.fxml"));
+                    Parent bookReturn = loader.load();
                     Scene scene = new Scene(bookReturn);
                     primaryStage.setScene(scene);
                     primaryStage.show();
-                } catch (IOException ex) { }
-            });
-    }
-    @FXML
-    private void collectionButtonAction(ActionEvent event) {
-    	System.out.println("COLLECTION");
-    	primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-    	Platform.runLater(
-            () -> {
-                try {
-                    Parent collection = FXMLLoader.load(getClass().getResource("/screens/DatabaseScreen.fxml"));
-                    Scene scene = new Scene(collection);
-                    primaryStage.setScene(scene);
-                    primaryStage.show();
+                    
+                    BookReturnScreenController brsc = loader.getController();
+                    brsc.initializeLibrary(library);
                 } catch (IOException ex) { }
             });
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }    
     
     public void initializeLibrary(Library library) {

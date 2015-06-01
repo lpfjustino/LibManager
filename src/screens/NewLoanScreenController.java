@@ -14,29 +14,22 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import management.Library;
 
 public class NewLoanScreenController implements Initializable{
-	
+	Library library;
 	Stage primaryStage;
-	@FXML
-	private TextField bookIdField;
-	@FXML
-	private TextField usernameField;
-	@FXML
-	private TextField titleField;
-	String username, title;
-	int bookId;
+	@FXML private TextField userIdField;
+	@FXML private TextField bookIdField;
 	
-	@FXML
+    @FXML
     private void confirmButtonAction(ActionEvent event) {
 		
-//		bookId = Integer.valueOf(bookIdField.getText());
-        title = titleField.getText().toString();
-        username = usernameField.getText();
+        int bookId = Integer.valueOf(bookIdField.getText());
+        int userId = Integer.valueOf(userIdField.getText());
         
         System.out.println("Id:" + bookId);
-        System.out.println("username:" + username);
-        System.out.println("Title:" + title);
+        System.out.println("username:" + userId);
 
         //TODO: CHAMAR AS FUNCAO DE NEW LOAN
 		
@@ -53,7 +46,7 @@ public class NewLoanScreenController implements Initializable{
 	}
 	@FXML
 	private void cancelButtonAction(ActionEvent event) {
-		// returns to main screen
+		// Returns to main screen
 		primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
 		Platform.runLater(
 				() -> {
@@ -71,4 +64,7 @@ public class NewLoanScreenController implements Initializable{
 
 	}
 
+        public void initializeLibrary(Library library) {
+            this.library = library;
+        }
 }

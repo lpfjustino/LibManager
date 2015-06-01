@@ -12,4 +12,9 @@ public enum BookType {
         if(text.equals("Text")) return TEXT;
         else return GENERAL;
     }
+    
+    @Override
+    public String toString() {
+        return getTypeRepresentation(this);
+    }
 }

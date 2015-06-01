@@ -26,6 +26,7 @@ public class NewBookScreenController implements Initializable {
     @FXML private TextField idField = new TextField();
     @FXML private TextField titleField = new TextField();
     @FXML private TextField authorField = new TextField();
+    @FXML private TextField quantityField = new TextField();
     @FXML private RadioButton bookText = new RadioButton();
     @FXML private RadioButton bookGeneral = new RadioButton();
     @FXML private ToggleGroup bookType = new ToggleGroup();
@@ -34,7 +35,7 @@ public class NewBookScreenController implements Initializable {
 	
     @FXML
     private void confirmButtonAction(ActionEvent event) throws IOException {
-        int qty=0;                                            // VEM DO CAMPO QUE VC VAI CRIAR DE TEXTFIELD!!!
+        int quantity = Integer.parseInt(quantityField.getText());
         int id = Integer.parseInt(idField.getText());
         String title = titleField.getText();
         String author = authorField.getText();
@@ -45,7 +46,7 @@ public class NewBookScreenController implements Initializable {
         newBook.setTitle(title);
         newBook.setAuthor(author);
         newBook.setType(BookType.GENERAL);
-        library.addToCollection(newBook, qty);
+        library.addToCollection(newBook, quantity);
         
         primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
     	Platform.runLater(

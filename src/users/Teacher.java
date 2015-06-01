@@ -29,4 +29,9 @@ public class Teacher extends User {
     public String getName() {
             return name;
     }
+
+    @Override
+    public int getID() {
+        return id;
+    }
 }

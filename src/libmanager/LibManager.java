@@ -36,8 +36,6 @@ public class LibManager extends Application {
         
         HomeScreenController hsc = loader.getController();
         hsc.initializeLibrary(library);
-        
-        
     }
 
     public static void main(String[] args) {

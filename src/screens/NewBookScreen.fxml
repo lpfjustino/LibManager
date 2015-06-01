@@ -13,20 +13,22 @@
             <Font size="25.0" />
          </font>
       </Label>
-      <Label layoutX="46.0" layoutY="107.0" text="ID:" />
-      <Label layoutX="48.0" layoutY="150.0" text="Title:" />
-      <Label layoutX="46.0" layoutY="192.0" text="Author:" />
+      <Label fx:id="idLabel" layoutX="46.0" layoutY="107.0" text="ID:" />
+      <Label fx:id="titleLabel" layoutX="48.0" layoutY="150.0" text="Title:" />
+      <Label fx:id="authorLabel" layoutX="46.0" layoutY="192.0" text="Author:" />
       <Button layoutX="466.0" layoutY="278.0" mnemonicParsing="false" onAction="#confirmButtonAction" prefHeight="42.0" prefWidth="105.0" text="Confirm" />
       <Button layoutX="466.0" layoutY="334.0" mnemonicParsing="false" onAction="#cancelButtonAction" prefHeight="42.0" prefWidth="105.0" text="Cancel" />
       <TextField fx:id="idField" layoutX="121.0" layoutY="102.0" prefHeight="26.0" prefWidth="221.0" />
       <TextField fx:id="titleField" layoutX="121.0" layoutY="145.0" prefHeight="26.0" prefWidth="221.0" />
       <TextField fx:id="authorField" layoutX="121.0" layoutY="187.0" prefHeight="26.0" prefWidth="221.0" />
-      <Label layoutX="46.0" layoutY="245.0" text="Type:" />
-      <RadioButton fx:id="bookGeneral" layoutX="121.0" layoutY="252.0" mnemonicParsing="false" selected="true" text="General">
+      <Label layoutX="46.0" layoutY="265.0" text="Type:" />
+      <RadioButton fx:id="bookGeneral" layoutX="121.0" layoutY="270.0" mnemonicParsing="false" selected="true" text="General">
          <toggleGroup>
             <ToggleGroup fx:id="bookType" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="bookText" layoutX="121.0" layoutY="290.0" mnemonicParsing="false" text="Text" toggleGroup="$bookType" />
+      <RadioButton fx:id="bookText" layoutX="121.0" layoutY="308.0" mnemonicParsing="false" text="Text" toggleGroup="$bookType" />
+      <Label fx:id="quantityLabel" layoutX="46.0" layoutY="229.0" text="Quantity:" />
+      <TextField fx:id="quantityField" layoutX="121.0" layoutY="227.0" prefHeight="26.0" prefWidth="221.0" />
    </children>
 </AnchorPane>

@@ -21,20 +21,19 @@
       </RadioButton>
       <RadioButton fx:id="rbColleciton" layoutX="25.0" layoutY="72.0" mnemonicParsing="false" onAction="#rbCollectionClick" text="Collection" toggleGroup="$DBGroup" />
       <RadioButton fx:id="rbLoans" layoutX="25.0" layoutY="98.0" mnemonicParsing="false" onAction="#rbLoansClick" text="Loans" toggleGroup="$DBGroup" />
-      <TableView fx:id="collectionTable" layoutX="105.0" layoutY="72.0" prefHeight="316.0" prefWidth="483.0" visible="false">
+      <TableView fx:id="collectionTable" layoutX="121.0" layoutY="72.0" prefHeight="316.0" prefWidth="467.0" visible="false">
         <columns>
-          <TableColumn fx:id="bookIdCollumn" prefWidth="34.0" text="ID" />
-          <TableColumn fx:id="titleCollumn" prefWidth="169.0" text="Title" />
-            <TableColumn fx:id="authorCollumn" prefWidth="83.0" text="Author" />
-            <TableColumn fx:id="bookTypeCollumn" prefWidth="85.0" text="Type" />
-            <TableColumn fx:id="quantityCollumn" prefWidth="57.0" text="Quantity" />
+          <TableColumn fx:id="bookIdColumn" prefWidth="48.0" text="ID" />
+          <TableColumn fx:id="titleColumn" prefWidth="252.0" text="Title" />
+            <TableColumn fx:id="authorColumn" prefWidth="132.0" text="Author" />
+            <TableColumn fx:id="quantityColumn" minWidth="0.0" prefWidth="50.0" text="Qty" />
         </columns>
       </TableView>
       <TableView fx:id="loansTable" layoutX="105.0" layoutY="72.0" prefHeight="316.0" prefWidth="483.0" visible="false">
          <columns>
-            <TableColumn fx:id="bookCollumn" prefWidth="197.0" text="Book" />
-            <TableColumn fx:id="borrowerCollumn" prefWidth="181.0" text="Borrower" />
-            <TableColumn fx:id="expirationCollumn" minWidth="0.0" prefWidth="104.0" text="Expiration" />
+            <TableColumn fx:id="bookColumn" prefWidth="197.0" text="Book" />
+            <TableColumn fx:id="borrowerColumn" prefWidth="181.0" text="Borrower" />
+            <TableColumn fx:id="expirationColumn" minWidth="0.0" prefWidth="104.0" text="Expiration" />
          </columns>
       </TableView>
       <TableView fx:id="usersTable" layoutX="105.0" layoutY="72.0" prefHeight="316.0" prefWidth="483.0" visible="false">

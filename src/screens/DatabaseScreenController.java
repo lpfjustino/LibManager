@@ -2,7 +2,10 @@ package screens;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
+
+import books.Book;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
@@ -20,11 +23,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import libmanager.HomeScreenController;
 import management.Library;
+import management.Loan;
 import users.User;
 
 public class DatabaseScreenController implements Initializable {
-    Library library;
     Stage primaryStage;
 
     @FXML private Label dbTypeLabel;
@@ -36,17 +40,47 @@ public class DatabaseScreenController implements Initializable {
     @FXML private TableView collectionTable;
     @FXML private TableView loansTable;
     @FXML private TableView usersTable;
-    
+    // Users table
     @FXML private TableColumn<User, Integer> userIdCollumn;
     @FXML private TableColumn<User, String> nameCollumn;
     @FXML private TableColumn<User, String> userTypeCollumn;
-	
+    // Loans table
+    @FXML private TableColumn<Loan, String> bookColumn;
+    @FXML private TableColumn<Loan, String> borrowerColumn;
+    @FXML private TableColumn<Loan, Date> expirationColumn;
+    // Collection table
+    @FXML private TableColumn<Book, Integer> bookIdColumn;
+    @FXML private TableColumn<Book, String> titleColumn;
+    @FXML private TableColumn<Book, String> authorColumn;
+    @FXML private TableColumn<Book, Integer> quantityColumn;
+    
     @FXML
     private void rbCollectionClick(ActionEvent event) {
         // Alterna entre as tabelas dependendo do que o usuário deseja listar
         collectionTable.setVisible(true);
         loansTable.setVisible(false);
         usersTable.setVisible(false);
+        
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
+        
+        bookIdColumn.setCellValueFactory(cell -> {
+        	int bookId = ((Book) cell.getValue()).getId();
+        	return new ReadOnlyObjectWrapper<>(bookId);
+        });
+        
+//        quantityColumn.setCellValueFactory(cell -> {
+//        	int bookQty = ((Book) cell.getValue()).;
+//        	return new ReadOnlyObjectWrapper<>(bookId);
+//        });
+        
+        ObservableList<Book> data = FXCollections.observableArrayList();
+        HomeScreenController.library.getCollection()
+        		.keySet()
+                .forEach( book -> {
+                    data.add(book);
+                });
+        collectionTable.setItems(data);
     }
     
     @FXML
@@ -55,6 +89,22 @@ public class DatabaseScreenController implements Initializable {
         collectionTable.setVisible(false);
         loansTable.setVisible(true);
         usersTable.setVisible(false);
+        
+        bookColumn.setCellValueFactory(new PropertyValueFactory<>("book"));
+        borrowerColumn.setCellValueFactory(new PropertyValueFactory<>("borrower"));
+        
+        expirationColumn.setCellValueFactory(cell -> {
+            Date expDate = ((Loan) cell.getValue()).getExpirationDate();
+            return new ReadOnlyObjectWrapper<>(expDate);
+        });
+        
+        ObservableList<Loan> loanData = FXCollections.observableArrayList();
+        HomeScreenController.library.getLoans()
+                .stream()
+                .forEach( loan -> {
+                    loanData.add(loan);
+                });
+        loansTable.setItems(loanData);
     }
     
     @FXML
@@ -72,7 +122,7 @@ public class DatabaseScreenController implements Initializable {
         nameCollumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         
         ObservableList<User> data = FXCollections.observableArrayList();
-        library.getUsers()
+        HomeScreenController.library.getUsers()
                 .stream()
                 .forEach( user -> {
                     data.add(user);
@@ -98,8 +148,8 @@ public class DatabaseScreenController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     }
         
-    public void initializeLibrary(Library library) {
-        this.library = library;
-    }
+//    public void initializeLibrary(Library library) {
+//        this.library = library;
+//    }
 
 }

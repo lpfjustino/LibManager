@@ -2,7 +2,9 @@ package libmanager;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import management.Library;
 import screens.BookReturnScreenController;
 import screens.DatabaseScreenController;
@@ -21,7 +24,18 @@ import screens.NewUserScreenController;
 
 public class HomeScreenController implements Initializable {
     Stage primaryStage;
-    Library library;
+    public static Library library;
+    
+    @FXML
+    private DatePicker datePicker;
+    
+    @FXML
+    private void datePickerAction(ActionEvent event) {
+    	String pattern = "dd-MM-yyyy";
+    	datePicker.setPromptText(pattern.toLowerCase());
+    	LocalDate date = datePicker.getValue();
+        System.out.println("Selected date: " + date);
+    }
     
     @FXML
     private void newUserButtonAction(ActionEvent event) {
@@ -92,7 +106,7 @@ public class HomeScreenController implements Initializable {
                     primaryStage.show();
                     
                     DatabaseScreenController dsc = loader.getController();
-                    dsc.initializeLibrary(library);
+//                    dsc.initializeLibrary(library);
                 } catch (IOException ex) { }
             });
     }

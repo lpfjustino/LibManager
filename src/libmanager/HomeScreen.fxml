@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -9,25 +10,35 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="libmanager.HomeScreenController">
    <children>
-      <Label layoutX="45.0" layoutY="95.0" text="Library Manager" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="25.0">
+      <Label layoutX="18.0" layoutY="19.0" text="Library Manager" AnchorPane.leftAnchor="18.0" AnchorPane.topAnchor="19.0">
          <font>
-            <Font size="25.0" />
+            <Font size="35.0" />
          </font>
       </Label>
-      <Button layoutX="25.0" layoutY="75.0" mnemonicParsing="false" onAction="#newUserButtonAction" prefHeight="26.0" prefWidth="143.0" text="New User" />
-      <Button layoutX="25.0" layoutY="113.0" mnemonicParsing="false" onAction="#newBookButtonAction" prefHeight="26.0" prefWidth="143.0" text="New Book" />
-      <Button layoutX="25.0" layoutY="292.0" mnemonicParsing="false" onAction="#newLoanButtonAction" prefHeight="57.0" prefWidth="196.0" text="New Loan">
+      <Button fx:id="newUserButton" layoutX="98.0" layoutY="104.0" mnemonicParsing="false" onAction="#newUserButtonAction" prefHeight="57.0" prefWidth="191.0" text="New User">
+         <font>
+            <Font size="24.0" />
+         </font></Button>
+      <Button fx:id="newBookButton" layoutX="98.0" layoutY="175.0" mnemonicParsing="false" onAction="#newBookButtonAction" prefHeight="57.0" prefWidth="191.0" text="New Book">
+         <font>
+            <Font size="24.0" />
+         </font></Button>
+      <Button fx:id="newLoanButton" layoutX="306.0" layoutY="102.0" mnemonicParsing="false" onAction="#newLoanButtonAction" prefHeight="57.0" prefWidth="197.0" text="New Loan">
          <font>
             <Font size="24.0" />
          </font>
       </Button>
-      <Button layoutX="385.0" layoutY="292.0" mnemonicParsing="false" onAction="#bookReturnButtonAction" text="Book Return" />
-      <Button layoutX="25.0" layoutY="150.0" mnemonicParsing="false" onAction="#databaseButtonAction" prefHeight="25.0" prefWidth="143.0" text="Database" />
-      <ListView layoutX="332.0" layoutY="75.0" prefHeight="200.0" prefWidth="200.0" />
-      <Label layoutX="337.0" layoutY="40.0" text="Late Returns:" />
-      <Label fx:id="systemDate" layoutX="390.0" layoutY="359.0" text="System Date: ">
+      <Button fx:id="bookReturnButton" layoutX="306.0" layoutY="174.0" mnemonicParsing="false" onAction="#bookReturnButtonAction" prefHeight="57.0" prefWidth="197.0" text="Book Return">
          <font>
-            <Font size="18.0" />
+            <Font size="24.0" />
+         </font></Button>
+      <Button layoutX="98.0" layoutY="250.0" mnemonicParsing="false" onAction="#databaseButtonAction" prefHeight="86.0" prefWidth="404.0" text="Database">
+         <font>
+            <Font size="24.0" />
+         </font></Button>
+      <Label fx:id="systemDate" layoutX="14.0" layoutY="366.0" text="System Date: ">
+         <font>
+            <Font size="16.0" />
          </font></Label>
    </children>
 </AnchorPane>

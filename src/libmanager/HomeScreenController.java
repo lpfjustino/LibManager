@@ -1,5 +1,6 @@
 package libmanager;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -16,17 +17,20 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import management.CSVManager;
 import management.Library;
-import screens.BookReturnScreenController;
-import screens.NewBookScreenController;
-import screens.NewLoanScreenController;
-import screens.NewUserScreenController;
 
 public class HomeScreenController implements Initializable {
     Stage primaryStage;
     public static Library library;
 
     @FXML private Label systemDate;
+    @FXML private Button newUserButton;
+    @FXML private Button newBookButton;
+    @FXML private Button newLoanButton;
+    @FXML private Button bookReturnButton;
     
     @FXML
     private void newUserButtonAction(ActionEvent event) {
@@ -113,14 +117,25 @@ public class HomeScreenController implements Initializable {
                 String dateString = formatter.format(library.getDate());
                 String labelText = systemDate.getText() + dateString;
                 systemDate.setText(labelText);
+                
             });
-    }    
+        }
     
     public void initializeLibrary(Date date) {
     	try {
             library = new Library (date);
-            } catch (IOException e) {
-                    e.printStackTrace();
+            Date lastAccess = CSVManager.lastAccessFromCSV();
+            // Estamos no passado
+            if(date.before(lastAccess)) {
+                newUserButton.setDisable(true);
+                newBookButton.setDisable(true);
+                newLoanButton.setDisable(true);
+                bookReturnButton.setDisable(true);
+                systemDate.setText("You're in the past. How did you get here? D: - ");
+            } else {
+                CSVManager.registerLastAccess(date);
             }
+        } catch (IOException e) { }
+
     }
 }

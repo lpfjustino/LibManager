@@ -39,11 +39,13 @@ public class BookReturnScreenController implements Initializable {
             boolean success = HomeScreenController.library.returnBook(book, user);
             
             if(success) HomeScreenController.library.showDialog("Success",
-                                    "Return registered.",
-                                    "The return has been made successfully.");
-            else HomeScreenController.library.showDialog("Failed",
-                                    "Return not registered.",
-                                    "Couldn't complete the return.");
+                                "Return registered.",
+                                "The return has been made successfully.");
+            
+            else HomeScreenController.library.showDialog("User suspended",
+                                "User " + user.toString() + "has been suspended",
+                                "That shall not ever be repeated ;@\n"
+                                + "Do you understand, little boy?1?11!?eleven1?1");
             
         } catch(NumberFormatException ex) {
             HomeScreenController.library.showDialog("Error", "Invalid input.",

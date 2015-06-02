@@ -17,11 +17,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import libmanager.HomeScreenController;
-import management.Library;
 import users.Community;
 import users.Student;
 import users.Teacher;
+import users.User;
 import users.UserType;
+import static users.UserType.COMMUNITY;
+import static users.UserType.STUDENT;
+import static users.UserType.TEACHER;
 
 public class NewUserScreenController implements Initializable {
 	private Stage primaryStage;
@@ -34,28 +37,36 @@ public class NewUserScreenController implements Initializable {
 	@FXML private ToggleGroup userType = new ToggleGroup();
 	
     @FXML
-    private void confirmButtonAction(ActionEvent event) throws IOException {
-        int id = Integer.parseInt(idField.getText());
-        String name = nameField.getText();
-        String type = ((RadioButton) userType.getSelectedToggle()).getText();
-        UserType userType = UserType.getTypeFromText(type);
-        
-        switch(userType) {
-            case STUDENT:
-                Student newStudent = new Student(id, name);
-                HomeScreenController.library.registerUser(newStudent, userType);
-                break;
-            case TEACHER:
-                Teacher newTeacher = new Teacher(id, name);
-                HomeScreenController.library.registerUser(newTeacher, userType);
-                break;
-                
-            case COMMUNITY:
-                Community newCommunity = new Community(id, name);
-                HomeScreenController.library.registerUser(newCommunity, userType);
-                break;
+    private void confirmButtonAction(ActionEvent event) {
+        try {
+            // Recupera os campos da GUI
+            int id = Integer.parseInt(idField.getText());
+            String name = nameField.getText();
+            String type = ((RadioButton) userType.getSelectedToggle()).getText();
+            UserType userType = UserType.getTypeFromText(type);
+            
+            // Verifica se a inserção foi bem sucedida
+            boolean success = HomeScreenController.library.registerUser(
+                    buildUser(id, name, userType),
+                    userType
+            );
+            
+            // Mostra uma mensagem de alerta apropriada
+            if(success)
+                HomeScreenController.library.showDialog("Success",
+                                        "Registration success.",
+                                        "The registration has been made successfully.");
+            else HomeScreenController.library.showDialog("Failed",
+                                        "Registration failed.",
+                                        "Couldn't complete user registration.");
+            
+        } catch(IOException|NumberFormatException ex) {
+            HomeScreenController.library.showDialog("Failed",
+                                        "Registration failed.",
+                                        "Couldn't complete user registration.");
         }
         
+        // Retorna para a tela principal
         primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
     	Platform.runLater(
             () -> {
@@ -66,6 +77,23 @@ public class NewUserScreenController implements Initializable {
                     primaryStage.show();
                 } catch (IOException ex) { }
             });
+    }
+        
+    // Função auxiliar para retornar um Usuário do tipo certo
+    public User buildUser(int id, String name, UserType type) {
+        switch(type) {
+            case STUDENT:
+                return new Student(id, name);
+            
+            case TEACHER:
+                return new Teacher(id, name);
+            
+            case COMMUNITY:
+                return new Community(id, name);
+                
+            default:
+                return null;
+        }
     }
     
     @FXML

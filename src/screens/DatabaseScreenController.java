@@ -24,22 +24,21 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import libmanager.HomeScreenController;
-import management.Library;
 import management.Loan;
 import users.User;
 
 public class DatabaseScreenController implements Initializable {
     Stage primaryStage;
 
+    // GUI fields
     @FXML private Label dbTypeLabel;
-    
     @FXML private RadioButton rbCollection;
     @FXML private RadioButton rbLoans;
     @FXML private RadioButton rbUsers;
-    
     @FXML private TableView collectionTable;
     @FXML private TableView loansTable;
     @FXML private TableView usersTable;
+    
     // Users table
     @FXML private TableColumn<User, Integer> userIdCollumn;
     @FXML private TableColumn<User, String> nameCollumn;
@@ -68,11 +67,6 @@ public class DatabaseScreenController implements Initializable {
         	int bookId = ((Book) cell.getValue()).getId();
         	return new ReadOnlyObjectWrapper<>(bookId);
         });
-        
-//        quantityColumn.setCellValueFactory(cell -> {
-//        	int bookQty = ((Book) cell.getValue()).;
-//        	return new ReadOnlyObjectWrapper<>(bookId);
-//        });
         
         ObservableList<Book> data = FXCollections.observableArrayList();
         HomeScreenController.library.getCollection()

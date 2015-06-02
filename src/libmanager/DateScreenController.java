@@ -49,26 +49,6 @@ public class DateScreenController implements Initializable {
 				});
 
 	}
-//	
-	@FXML
-	private void confirmButtonAction(ActionEvent event) {
-//		
-//		primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-//		Platform.runLater(
-//				() -> {
-//					try {
-//						Parent loans = FXMLLoader.load(getClass().getResource("/libmanager/HomeScreen.fxml"));
-//						Scene scene = new Scene(loans);
-//						primaryStage.setScene(scene);
-//						primaryStage.show();
-//						
-//						FXMLLoader homeScreenLoader = new FXMLLoader(getClass().getResource("dateScreen.fxml"));
-//				        HomeScreenController hsc = homeScreenLoader.getController();
-//				        hsc.initializeLibrary(date);
-//					} catch (IOException ex) { }
-//				});
-//
-	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {

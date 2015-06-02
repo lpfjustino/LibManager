@@ -38,26 +38,39 @@ public class NewBookScreenController implements Initializable {
 	
     @FXML
     private void confirmButtonAction(ActionEvent event) {
-        int quantity = Integer.parseInt(quantityField.getText());
-        int id = Integer.parseInt(idField.getText());
-        String title = titleField.getText();
-        String author = authorField.getText();
-        String type = ((RadioButton) bookType.getSelectedToggle()).getText();
-        BookType newBookType = BookType.getTypeFromText(type);
-        
-        // Cria uma instância do livro
-        Book newBook = new Book(id);
-        newBook.setTitle(title);
-        newBook.setAuthor(author);
-        newBook.setType(newBookType);
-        
-        // Tenta adicioná-lo ao arquivo
         try {
-            HomeScreenController.library.addToCollection(newBook, quantity);
-        } catch (IOException ex) {
+            // Recupera os campos da GUI
+            int quantity = Integer.parseInt(quantityField.getText());
+            int id = Integer.parseInt(idField.getText());
+            String title = titleField.getText();
+            String author = authorField.getText();
+            String type = ((RadioButton) bookType.getSelectedToggle()).getText();
+            BookType newBookType = BookType.getTypeFromText(type);
+
+            // Cria uma instância do livro
+            Book newBook = new Book(id);
+            newBook.setTitle(title);
+            newBook.setAuthor(author);
+            newBook.setType(newBookType);
+        
+            // Verifica se ocorreu uma inserção ou remoção e notifica o usuário
+            // com um Alert apropriado
+            boolean inserted = HomeScreenController.library.addToCollection(
+                    newBook, quantity);
+            
+            if(inserted) HomeScreenController.library.showDialog("Success",
+                                        "Book registered.",
+                                        "The book has been registered successfully.");
+            // Updated
+            else HomeScreenController.library.showDialog("Success",
+                                        "Book quantity updated.",
+                                        "Book quantity has been successfuly updated.");
+        
+        } catch (IOException|NumberFormatException ex) {
             HomeScreenController.library.showDialog("File error", "File output failed", "Error occurred on insertion");
         }
         
+        // Retorna para a tela principal
         primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
     	Platform.runLater(
             () -> {

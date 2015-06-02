@@ -26,7 +26,6 @@
           <TableColumn fx:id="bookIdColumn" prefWidth="48.0" text="ID" />
           <TableColumn fx:id="titleColumn" prefWidth="252.0" text="Title" />
             <TableColumn fx:id="authorColumn" prefWidth="132.0" text="Author" />
-            <TableColumn fx:id="quantityColumn" minWidth="0.0" prefWidth="50.0" text="Qty" />
         </columns>
       </TableView>
       <TableView fx:id="loansTable" layoutX="105.0" layoutY="72.0" prefHeight="316.0" prefWidth="483.0" visible="false">

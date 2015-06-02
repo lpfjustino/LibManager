@@ -18,8 +18,6 @@ import users.UserType;
 import books.BookType;
 import java.util.Calendar;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class CSVManager {
     private static Library library;
@@ -110,12 +108,16 @@ public class CSVManager {
                 new FileReader(suspendedCSV), ',')) {
             String[] row = null;
             while((row = csvReader.readNext()) != null) {
-                // Configura o usuário e a data
-                User user = userFromCSV(row);
                 try {
-                    Date date = new SimpleDateFormat("dd/MM/yyyy").parse(row[2]);
+                    // Configura o usuário e a data
+                    User user = userFromCSV(row);
+                    String dateString = row[2]+"/"+row[3]+"/"+row[4];
+                    Date date = new SimpleDateFormat("dd/MM/yyyy")
+                            .parse(dateString);
                     library.getSuspendedUsers().put(user, date);
-                } catch (ParseException ex) {}
+                } catch (ParseException ex) {
+                    ex.printStackTrace();
+                }
             }
             csvReader.close();
         }
@@ -151,6 +153,24 @@ public class CSVManager {
         }
         
         reader.close();
+    }
+    
+    // Guarda em um registro o último acesso feito
+    public static void registerLastAccess(Date date) throws IOException {
+        CSVWriter writer = new CSVWriter(new FileWriter("last_access.csv"));
+        
+        Calendar localCalendar = Calendar.getInstance();
+        localCalendar.setTime(date);
+        int day = localCalendar.get(Calendar.DATE);
+        int month = localCalendar.get(Calendar.MONTH) + 1;
+        int year = localCalendar.get(Calendar.YEAR);
+        
+        String[] content =  (day + "," +
+                month + "," +
+                year).split(",");
+        
+        writer.writeNext(content);
+        writer.close();
     }
     
     
@@ -242,7 +262,7 @@ public class CSVManager {
     }
     
     // Insere o usuário na lista de usuários suspensos
-    public void includeSuspension(User user, Date date) throws IOException {
+    public static void includeSuspension(User user, Date date) throws IOException {
         CSVWriter writer = new CSVWriter(new FileWriter("suspended.csv", true));
         String[] content = suspensionRowFormat(user, date);
         writer.writeNext(content);
@@ -279,9 +299,7 @@ public class CSVManager {
         
         // Percorre o arquivo file até encontrar o usuário
         while ((nextLine = reader.readNext()) != null) {
-            for (String field: nextLine) {
-                if (field.matches(String.valueOf(id))) found = true;
-            }
+            if (nextLine[0].equals(String.valueOf(id))) found = true;
         }
         
         return found;
@@ -400,6 +418,30 @@ public class CSVManager {
         Integer quantity = Integer.valueOf(row[4]);
         
         collection.put(book, quantity);
+    }
+    
+    // Retorna a data do último acesso feito à biblioteca
+    public static Date lastAccessFromCSV() throws IOException {
+        File loansCSV = new File("last_access.csv");
+        
+        // Caso seja o primeiro acesso, cria-se uma data fictícia tal que um
+        // acesso anterior não possa existir
+        if(!loansCSV.exists()) registerLastAccess(new Date(0));
+        
+        CSVReader reader = new CSVReader(new FileReader(loansCSV));
+        String[] row = reader.readNext();
+        
+        int day = Integer.valueOf(row[0]);
+        int month = Integer.valueOf(row[1]);
+        int year = Integer.valueOf(row[2]);
+        String dateString = day + "/" + month + "/" + year;
+        
+        try {
+            Date date = new SimpleDateFormat("dd/MM/yyyy").parse(dateString);
+            return date;
+        } catch (ParseException ex) { }
+        
+        return null;
     }
     
 }

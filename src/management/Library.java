@@ -3,7 +3,6 @@ import books.Book;
 import books.BookType;
 import books.NoSuchBookException;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,6 +12,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import javafx.scene.control.Alert;
+import libmanager.HomeScreenController;
 import users.Community;
 import users.NoSuchUserException;
 import users.UserType;
@@ -37,24 +37,46 @@ public class Library {
     }
 
     // Adiciona ou atualiza o livro no acervo e no arquivo de registros
-    public void addToCollection(Book book, int quantity) throws IOException {
+    //
+    // Retorna true se o livro foi adicionado com sucesso e false se foi
+    // atualizado
+    public boolean addToCollection(Book book, int quantity) throws IOException {
         // Aumenta a quantidade de livros, caso este já esteja contido no acervo
         if(collection.containsKey(book)) {
             int oldQuantity = collection.get(book);
             collection.replace(book, oldQuantity + quantity);
             database.updateCollection(book, oldQuantity + quantity);
+            return false;
         }
         // Caso contrário, insere-o no acervo
         else {
             collection.put(book, quantity);
             database.includeInCollection(book, quantity);
+            return true;
         }
     }
 
     // Insere o usuário na lista de usuários e no arquivo de registros
-    public void registerUser(User user, UserType type) throws IOException {
-        users.add(user);
-        CSVManager.includeUser(user, type);
+    //
+    // Retorna true se o usuário conseguiu cadastrar-se
+    public boolean registerUser(User user, UserType type) throws IOException {
+        if(!userAlreadyRegistered(user.getID())) {
+            users.add(user);
+            CSVManager.includeUser(user, type);
+            return true;
+        }
+        else return false;
+    }
+    
+    public boolean userAlreadyRegistered(int id) {
+        long userCount = users
+                .stream()
+                .filter(
+                    (User user) -> user.getID() == id
+                )
+                .count();
+        
+        return userCount > 0;
     }
 
     // Verifica e empresta o livro para o usuário caso ele possa emprestá-lo,
@@ -72,6 +94,8 @@ public class Library {
     }
 
     // Verifica se o usuário pode emprestar o livro
+    //
+    // Retorna true se o usuário pode emprestar o livro
     public boolean canLend(Book book, User user) {
         return (currentlyBorrowed(user) < user.LOANS_LIMIT &&
                 !isSuspended(user) &&
@@ -79,6 +103,8 @@ public class Library {
                 !isCurrentlyBorrowed(book, user));
     }
     
+    // Retorna true se o usuário pode emprestar um determinado tipo de livro
+        //
     // Retorna true se o usuário pode emprestar um determinado tipo de livro
     public boolean isEligible(Book book, User user) {
         if(user instanceof Community && 
@@ -111,6 +137,9 @@ public class Library {
     }
     
     // Trata da devolução do empréstimo de um determinado livro
+    //
+    // Retorna false caso o usuário tenha sido suspenso por atraso, e true
+    // caso a devolução tenha sido feita em tempo hábil
     public boolean returnBook(Book book, User borrower) throws IOException {
         Optional<Loan> newReturn = loans
                 .stream()
@@ -123,9 +152,28 @@ public class Library {
         if(newReturn.isPresent()){
             Loan foundReturn = newReturn.get();
             loans.remove(foundReturn);
+            
+            int delay = HomeScreenController.library.daysSpan(
+                    HomeScreenController.library.getDate(),
+                    foundReturn.getExpirationDate());
+            
+            // Se o usuário atrasou para devolver o livro, suspende-o por
+            // "delay" dias
+            if(delay < 0) {
+                Date systemDate = HomeScreenController.library.getDate();
+                Date suspensionTerm = HomeScreenController.library.sumDays(
+                        systemDate, Math.abs(delay));
+
+                suspendUser(borrower, suspensionTerm);
+                CSVManager.includeSuspension(borrower, suspensionTerm);
+                CSVManager.returnBook();
+                return false;
+            } else {
+                CSVManager.returnBook();
+                return true;
+            }
         }
         
-        CSVManager.returnBook();
         return true;
     }
 
@@ -144,8 +192,6 @@ public class Library {
     public void suspendUser (User user, Date date) throws IOException {
         if(!isSuspended(user))
             suspendedUsers.put(user, date);
-        
-        database.includeSuspension(user, date);
     }
 
     // Retorna um usuário dado seu identificador
@@ -191,7 +237,7 @@ public class Library {
     // Retorna em número de dias que dista duas datas a serem comparadas
     public int daysSpan(Date d1, Date d2) {
         final long numberOfMSInADay = 1000*60*60*24;
-        long span = Math.abs((d2.getTime() - d1.getTime()) / numberOfMSInADay);
+        long span = (d2.getTime() - d1.getTime()) / numberOfMSInADay;
         return (int) span;
     }
     
@@ -199,7 +245,7 @@ public class Library {
     // passados por parâmetro
     public Date sumDays(Date base, int days) {
         final long numberOfMSInADay = 1000*60*60*24;
-        long dayInMS = base.getTime() + days * numberOfMSInADay;
+        long dayInMS = base.getTime() + (days * numberOfMSInADay);
         return new Date(dayInMS);
     }
     

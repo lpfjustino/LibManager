@@ -96,7 +96,7 @@ public class HomeScreenController implements Initializable {
     @FXML
     private void bookReturnButtonAction(ActionEvent event) {
     	primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-    	System.out.println("BOOK RETURN");
+    
     	Platform.runLater(
             () -> {
                 try {

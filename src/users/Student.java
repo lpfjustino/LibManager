@@ -12,11 +12,6 @@ public class Student extends User {
     }
 
     @Override
-    public void borrow(Book book) {
-
-    }
-
-    @Override
     public int getLoansLimit() {
         return LOANS_LIMIT;
     }
@@ -33,5 +28,27 @@ public class Student extends User {
     @Override
     public int getID() {
         return id;
+    }
+    
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Student other = (Student) obj;
+        return true;
+    }
+    
+    @Override
+    public String toString() {
+        return "("+ this.getID() + ") " + this.getName();
     }
 }

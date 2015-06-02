@@ -18,7 +18,8 @@ import users.UserType;
 import books.BookType;
 import java.util.Calendar;
 import java.util.Map;
-import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CSVManager {
     private static Library library;
@@ -230,7 +231,6 @@ public class CSVManager {
                 writer.close();
             }
         }
-        
     }
     
     // Adiciona no arquivo de registros o empréstimo passado por parâmetro
@@ -246,6 +246,24 @@ public class CSVManager {
         CSVWriter writer = new CSVWriter(new FileWriter("suspended.csv", true));
         String[] content = suspensionRowFormat(user, date);
         writer.writeNext(content);
+        writer.close();
+    }
+    
+    // Remove a linha do empréstimo do arquivo de registros
+    public static void returnBook() throws IOException {
+        File file = new File("loans.csv");
+
+        // Apaga o antigo arquivo e o reescreve todos os itens
+        CSVWriter writer = new CSVWriter(new FileWriter(file));
+
+        library.getLoans()
+                .stream()
+                .forEach(
+                    (entry) -> {
+                        String[] content = loanRowFormat(entry);
+                        writer.writeNext(content);
+                    }
+                );
         writer.close();
     }
     
@@ -285,12 +303,21 @@ public class CSVManager {
     
     // Retorna a string que corresponde a um registro no arquivo
     private static String[] loanRowFormat(Loan loan) {
+        Calendar localCalendar = Calendar.getInstance();
+        localCalendar.setTime(loan.getExpirationDate());
+        int day = localCalendar.get(Calendar.DATE);
+        int month = localCalendar.get(Calendar.MONTH) + 1;
+        int year = localCalendar.get(Calendar.YEAR);
+        
         return (loan.getBook().getId() + "," +
                 loan.getBook().getTitle()+ "," +
                 loan.getBook().getAuthor()+ "," +
                 BookType.getTypeRepresentation(loan.getBook().getType())+ "," +
                 loan.getBorrower().id + "," +
-                loan.getBorrower().getName()).split(",");
+                loan.getBorrower().getName() + "," +
+                day + "," +
+                month + "," +
+                year).split(",");
     }
     
     // Retorna a string que corresponde a uma suspensão no arquivo
@@ -330,11 +357,12 @@ public class CSVManager {
         Loan loan = new Loan();
         loan.setBook(bookFromCSV(row));
         loan.setBorrower(borrowerFromCSV(row));
+        loan.setExpirationDate(expirationDateFromCSV(row));
         
         return loan;
     }
     
-    // Retorna o livro correspondente a um registro no arquivo CSV da coleção
+    // Retorna o livro correspondente a um registro no arquivo CSV dos empréstimos
     private static Book bookFromCSV(String[] row) {
         Book book = new Book(Integer.valueOf(row[0]));
         book.setTitle(row[1]);
@@ -344,9 +372,24 @@ public class CSVManager {
         return book;
     }
     
-    // Retorna o usuário correspondente a um registro no arquivo CSV da coleção
+    // Retorna o usuário correspondente a um registro no arquivo CSV dos empréstimos
     private static User borrowerFromCSV(String[] row) throws IOException {
         return buildUser(Integer.valueOf(row[4]), row[5]);
+    }
+    
+    // Retorna a data de expiração correspondente a um registro no arquivo CSV dos empréstimos
+    private static Date expirationDateFromCSV(String[] row) throws IOException {
+        int day = Integer.valueOf(row[6]);
+        int month = Integer.valueOf(row[7]);
+        int year = Integer.valueOf(row[8]);
+        String dateString = day + "/" + month + "/" + year;
+        
+        try {
+            Date date = new SimpleDateFormat("dd/MM/yyyy").parse(dateString);
+            return date;
+        } catch (ParseException ex) { }
+        
+        return null;
     }
     
     // Retorna a string que corresponde a um usuario

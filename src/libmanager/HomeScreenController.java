@@ -39,9 +39,6 @@ public class HomeScreenController implements Initializable {
                     Scene scene = new Scene(newUser);
                     primaryStage.setScene(scene);
                     primaryStage.show();
-                    
-                    NewUserScreenController nusc = loader.getController();
-                    nusc.initializeLibrary(library);
                 } catch (IOException ex) { }
             });
     }
@@ -57,16 +54,12 @@ public class HomeScreenController implements Initializable {
                     Scene scene = new Scene(newBook);
                     primaryStage.setScene(scene);
                     primaryStage.show();
-                    
-                    NewBookScreenController nbsc = loader.getController();
-                    nbsc.initializeLibrary(library);
                 } catch (IOException ex) { }
             });
     }
     @FXML
     private void newLoanButtonAction(ActionEvent event) {
         primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-    	System.out.println("NEW LOAN");
     	Platform.runLater(
             () -> {
                 try {
@@ -75,9 +68,6 @@ public class HomeScreenController implements Initializable {
                     Scene scene = new Scene(newLoan);
                     primaryStage.setScene(scene);
                     primaryStage.show();
-                    
-                    NewLoanScreenController nlsc = loader.getController();
-                    nlsc.initializeLibrary(library);
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -86,7 +76,6 @@ public class HomeScreenController implements Initializable {
     @FXML
     private void databaseButtonAction(ActionEvent event) {
         primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-    	System.out.println("DATABASE");
     	Platform.runLater(
             () -> {
                 try {
@@ -112,9 +101,6 @@ public class HomeScreenController implements Initializable {
                     Scene scene = new Scene(bookReturn);
                     primaryStage.setScene(scene);
                     primaryStage.show();
-                    
-                    BookReturnScreenController brsc = loader.getController();
-                    brsc.initializeLibrary(library);
                 } catch (IOException ex) { }
             });
     }

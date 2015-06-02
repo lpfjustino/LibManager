@@ -147,9 +147,4 @@ public class DatabaseScreenController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
-        
-//    public void initializeLibrary(Library library) {
-//        this.library = library;
-//    }
-
 }

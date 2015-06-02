@@ -58,4 +58,9 @@ public class Book {
         }
         return true;
     }
+    
+    @Override
+    public String toString() {
+        return "("+ this.getId() + ") " + this.getTitle();
+    }
 }

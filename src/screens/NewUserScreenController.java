@@ -16,6 +16,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
+import libmanager.HomeScreenController;
 import management.Library;
 import users.Community;
 import users.Student;
@@ -24,7 +25,6 @@ import users.UserType;
 
 public class NewUserScreenController implements Initializable {
 	private Stage primaryStage;
-        private Library library;
 	
 	@FXML private TextField idField = new TextField();
 	@FXML private TextField nameField = new TextField();
@@ -43,16 +43,16 @@ public class NewUserScreenController implements Initializable {
         switch(userType) {
             case STUDENT:
                 Student newStudent = new Student(id, name);
-                library.registerUser(newStudent, userType);
+                HomeScreenController.library.registerUser(newStudent, userType);
                 break;
             case TEACHER:
                 Teacher newTeacher = new Teacher(id, name);
-                library.registerUser(newTeacher, userType);
+                HomeScreenController.library.registerUser(newTeacher, userType);
                 break;
                 
             case COMMUNITY:
                 Community newCommunity = new Community(id, name);
-                library.registerUser(newCommunity, userType);
+                HomeScreenController.library.registerUser(newCommunity, userType);
                 break;
         }
         
@@ -86,8 +86,4 @@ public class NewUserScreenController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 	}
-        
-        public void initializeLibrary(Library library) {
-            this.library = library;
-        }
 }

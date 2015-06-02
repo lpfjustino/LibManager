@@ -36,38 +36,6 @@ public class LibManager extends Application {
 
     public static void main(String[] args) {
         launch(args);
-        
-            /////////////////// NEW USERS ///////////////////
-//            Student istudanty = new Student(1, "Esteiquerino");
-//            library.registerUser(istudanty, UserType.STUDENT);
-//            Teacher titxer = new Teacher(2, "Fodaserino");
-//            library.registerUser(titxer, UserType.TEACHER);
-//            Community com = new Community(3, "Commu");
-//            library.registerUser(com, UserType.COMMUNITY);
-//            library.listUsers();
-            
-            /////////////////// NEW BOOKS //////////////////
-//            Book hp = new Book(1);
-//            hp.setTitle("Harry Potter");
-//            hp.setAuthor("JK Rowling");
-//            hp.setType(BookType.TEXT);
-//            
-//            Book hp2 = new Book(2);
-//            hp2.setTitle("Harry Potter 2");
-//            hp2.setAuthor("JK Rowling 2");
-//            hp2.setType(BookType.GENERAL);
-//            
-//            library.addToCollection(hp, 5);
-//            library.addToCollection(hp2, 2);
-//            library.listCollection();
-//            
-//            // Substituição de hp2
-//            Book hp3 = new Book(2);
-//            hp2.setTitle("Harry Potter 2000");
-//            hp2.setAuthor("JK Rowling 20000");
-//            hp2.setType(BookType.TEXT);
-//            library.addToCollection(hp3, 200);
-//            library.listCollection();
             
             /////////////////// SUSPENSION //////////////////
 //            String suspensionString = "January 4, 2010";
